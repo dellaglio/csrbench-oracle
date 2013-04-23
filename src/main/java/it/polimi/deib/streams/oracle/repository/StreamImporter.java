@@ -1,5 +1,7 @@
 package it.polimi.deib.streams.oracle.repository;
 
+import java.io.File;
+
 import it.polimi.deib.streams.oracle.Config;
 
 import org.openrdf.model.Resource;
@@ -19,14 +21,18 @@ public class StreamImporter {
 	private Repository repo; 
 
 	public StreamImporter(){
-		repo = new SailRepository(new NativeStore(Config.getInstance().getRepoDir(), "cspo,cops"));
+		this(Config.getInstance().getRepoDir());
+	}
+	
+	public StreamImporter(File repositoryFolder){
+		repo = new SailRepository(new NativeStore(repositoryFolder, "cspo,cops"));
 		try {
 			repo.initialize();
 		} catch (RepositoryException e) {
 			logger.error("Error while initializing the repository", e);
 		}
 	}
-	
+
 	public static void main(String[] args) {
 		StreamImporter si = new StreamImporter();
 		try {
