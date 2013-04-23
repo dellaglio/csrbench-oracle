@@ -2,7 +2,6 @@ package it.polimi.deib.streams.oracle.result;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class OutputStreamResult {
 	public enum S2ROperator {Istream, Rstream, Dstream};
