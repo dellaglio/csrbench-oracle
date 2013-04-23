@@ -6,13 +6,10 @@ import it.polimi.deib.streams.oracle.s2r.Window;
 import it.polimi.deib.streams.oracle.s2r.Windower;
 
 import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import static org.junit.Assert.*;
 
 public class WindowerWindowCloseTest {
-	private static final Logger logger = LoggerFactory.getLogger(WindowerWindowCloseTest.class);
 
 	//W(10,3), t0=0
 	@Test public void timeSlidingWindow1ShouldSlideWithWindowClose(){

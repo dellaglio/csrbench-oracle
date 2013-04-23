@@ -2,6 +2,7 @@ package it.polimi.deib.streams.oracle;
 
 import java.io.File;
 
+import it.polimi.deib.streams.oracle.repository.RepoUtility;
 import it.polimi.deib.streams.oracle.repository.StreamImporter;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
 import it.polimi.deib.streams.oracle.s2r.WindowScope;
@@ -10,14 +11,10 @@ import it.polimi.deib.streams.oracle.s2r.Windower;
 
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.openrdf.model.Resource;
-import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
-import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
-import org.openrdf.repository.RepositoryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,7 +30,7 @@ public class WindowerContentChangeTest {
 		testStore = new File("test-repository");
 		si = new StreamImporter(testStore);
 		try {
-			if(countTriples(si.getRepository().getConnection())>0)
+			if(RepoUtility.countTriples(logger, si.getRepository().getConnection())>0)
 				si.clearRepository();
 
 			ValueFactory vf = si.getRepository().getValueFactory();
@@ -48,12 +45,13 @@ public class WindowerContentChangeTest {
 			si.addTimestampedStatement(m1, detectedAt, r2, 12000);
 			si.addTimestampedStatement(m2, detectedAt, r2, 15000);
 			RepositoryConnection conn = si.getRepository().getConnection();
-			printTriples(conn);
+			RepoUtility.printTriples(logger, conn);
 		} catch (RepositoryException e) {
 			logger.error("Error while initializing the test store", e);
 		}
 	}
 	
+	//W(10,3) t0=0
 	@Test public void timeSlidingWindow1ShouldSlideWithContentChange(){
 		try {
 			ReportPolicy policy = new ReportPolicy();
@@ -82,11 +80,12 @@ public class WindowerContentChangeTest {
 			range = windower.getNextWindowScope(conn);
 			assertNull(range);
 		} catch (RepositoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while executing a test", e);
+			fail();
 		}
 	}
 
+	//W(10,3) t0=2
 	@Test public void timeSlidingWindow2ShouldSlideWithContentChange(){
 		try {
 			ReportPolicy policy = new ReportPolicy();
@@ -112,36 +111,72 @@ public class WindowerContentChangeTest {
 			assertNull(range);
 
 		} catch (RepositoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while executing a test", e);
+			fail();
 		}
 
 	}
 
-	private static int countTriples(RepositoryConnection conn){
-		int ret=0;
-		try{
-			RepositoryResult<Statement> result = conn.getStatements((Resource)null, (URI)null, (Value)null, false);
-			while(result.hasNext()){
-				ret++;
-				result.next();
-			}
-			return ret;
-		} catch(RepositoryException e){
-			logger.error("Error while reading the triples in the repository");
-			return -1;
+	//W(1,1) t0=0
+	@Test public void timeSlidingWindow3ShouldSlideWithContentChange(){
+		try {
+			ReportPolicy policy = new ReportPolicy();
+			policy.setWindowClose(false);
+			policy.setContentChange(true);
+
+			RepositoryConnection conn = si.getRepository().getConnection();
+
+			Windower windower = new Windower(new Window(1000,1000), policy, 0000);
+			WindowScope range = windower.getNextWindowScope(conn);
+			assertEquals(1000, range.getFrom());
+			assertEquals(2000, range.getTo());
+
+			range = windower.getNextWindowScope(conn);
+			assertEquals(3000, range.getFrom());
+			assertEquals(4000, range.getTo());
+
+			range = windower.getNextWindowScope(conn);
+			assertEquals(12000, range.getFrom());
+			assertEquals(13000, range.getTo());
+
+			range = windower.getNextWindowScope(conn);
+			assertEquals(15000, range.getFrom());
+			assertEquals(16000, range.getTo());
+
+			range = windower.getNextWindowScope(conn);
+			assertNull(range);
+
+		} catch (RepositoryException e) {
+			logger.error("Error while executing a test", e);
+			fail();
 		}
+
 	}
 
-	private static void printTriples(RepositoryConnection conn){
-		try{
-			RepositoryResult<Statement> result = conn.getStatements((Resource)null, (URI)null, (Value)null, false);
-			while(result.hasNext()){
-				Statement s = result.next();
-				logger.debug("{}", s);
-			}
-		} catch(RepositoryException e){
-			logger.error("Error while reading the triples in the repository");
+	//W(1,1) t0=5
+	@Test public void timeSlidingWindow4ShouldSlideWithContentChange(){
+		try {
+			ReportPolicy policy = new ReportPolicy();
+			policy.setWindowClose(false);
+			policy.setContentChange(true);
+
+			RepositoryConnection conn = si.getRepository().getConnection();
+
+			Windower windower = new Windower(new Window(1000,1000), policy, 5000);
+			WindowScope range = windower.getNextWindowScope(conn);
+			assertEquals(12000, range.getFrom());
+			assertEquals(13000, range.getTo());
+
+			range = windower.getNextWindowScope(conn);
+			assertEquals(15000, range.getFrom());
+			assertEquals(16000, range.getTo());
+
+			range = windower.getNextWindowScope(conn);
+			assertNull(range);
+
+		} catch (RepositoryException e) {
+			logger.error("Error while executing a test", e);
+			fail();
 		}
 
 	}
