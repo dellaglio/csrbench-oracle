@@ -77,4 +77,11 @@ public class OutputStreamResult {
 			ret.append(srr.toString());
 		return ret.toString();
 	}
+	
+	public boolean contains(OutputStreamResult rel){
+		for(TimestampedRelationElement tre : rel.getResults())
+			if(!results.contains(tre)) 
+				return false;
+		return false;
+	}
 }

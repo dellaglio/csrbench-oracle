@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TimestampedRelationElement{
-	Map<String, Object> outputTuple;
-	long timestamp;
+	private Map<String, Object> outputTuple;
+	private long tupleTimestamp, outputRelationTimestamp;
 	
 	public TimestampedRelationElement(){
 		outputTuple = new HashMap<String, Object>();
@@ -20,11 +20,11 @@ public class TimestampedRelationElement{
 	}
 	
 	public long getTimestamp() {
-		return timestamp;
+		return tupleTimestamp;
 	}
 	
 	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;
+		this.tupleTimestamp = timestamp;
 	}
 	
 	@Override
@@ -41,13 +41,21 @@ public class TimestampedRelationElement{
 		return false;
 	}
 	
+	public long getOutputRelationTimestamp() {
+		return outputRelationTimestamp;
+	}
+	
+	public void setComputationTimestamp(long computationTimestamp) {
+		this.outputRelationTimestamp = computationTimestamp;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 		ret.append("\n<");
 		for(String key : outputTuple.keySet())
 			ret.append(key+"="+outputTuple.get(key)+ " ");
-		ret.append(">:["+timestamp+"]");
+		ret.append(">:["+tupleTimestamp+"]");
 		return ret.toString();
 	}
 	
@@ -55,5 +63,10 @@ public class TimestampedRelationElement{
 		TimestampedRelationElement tre = new TimestampedRelationElement();
 		tre.setTimestamp(timestamp);
 		return tre;
+	}
+	
+	@Override
+	public int hashCode() {
+		return outputTuple.hashCode();
 	}
 }

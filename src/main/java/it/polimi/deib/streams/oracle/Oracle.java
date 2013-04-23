@@ -155,9 +155,6 @@ public class Oracle {
 		}
 	}
 	
-	public static TimestampedRelation createEmptyTimestampedRelation(long timestamp){
-		TimestampedRelation ret = new TimestampedRelation();
-		ret.setComputationTimestamp(timestamp);
-		return ret;
-	}
+	
+	
 }
