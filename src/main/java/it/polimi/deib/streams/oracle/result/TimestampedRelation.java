@@ -12,6 +12,13 @@ public class TimestampedRelation {
 		results = new HashSet<TimestampedRelationElement>();
 	}
 
+	public TimestampedRelation(Set<TimestampedRelationElement> results,
+			long computationTimestamp) {
+		super();
+		this.results = results;
+		this.computationTimestamp = computationTimestamp;
+	}
+
 	public Set<TimestampedRelationElement> getElements() {
 		return results;
 	}
