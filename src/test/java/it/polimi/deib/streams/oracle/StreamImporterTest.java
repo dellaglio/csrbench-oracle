@@ -1,17 +1,14 @@
 package it.polimi.deib.streams.oracle;
 
+import it.polimi.deib.streams.oracle.repository.RepoUtility;
 import it.polimi.deib.streams.oracle.repository.StreamImporter;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.openrdf.model.Resource;
-import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
-import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryException;
-import org.openrdf.repository.RepositoryResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,18 +23,18 @@ public class StreamImporterTest {
 	@Before public void setup(){
 		si = new StreamImporter();
 		repo = si.getRepository();
-		if(countTriples()>0)
-			try {
+		try {
+			if(RepoUtility.countTriples(logger, repo.getConnection())>0)
 				si.clearRepository();
-			} catch (RepositoryException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+		} catch (RepositoryException e) {
+			logger.error("Error while initializing the tests", e);
+			fail();
+		}
 	}
 
 	@Test public void shouldImportTriples(){
-		assertEquals(0, countTriples());
 		try {
+			assertEquals(0, RepoUtility.countTriples(logger, repo.getConnection()));
 			ValueFactory vf = repo.getValueFactory();
 			URI m1 = vf.createURI("http://ex.org/instances#m1");
 			URI m2 = vf.createURI("http://ex.org/instances#m2");
@@ -49,38 +46,12 @@ public class StreamImporterTest {
 			si.addTimestampedStatement(m2, detectedAt, r1, 3000);
 			si.addTimestampedStatement(m1, detectedAt, r2, 12000);
 			si.addTimestampedStatement(m2, detectedAt, r2, 15000);
+			RepoUtility.printTriples(logger, repo.getConnection());
+			assertEquals(8, RepoUtility.countTriples(logger, repo.getConnection()));
 		} catch (RepositoryException e) {
 			logger.error("Error while adding triples to repository");
-		}
-		printTriples();
-		assertEquals(8, countTriples());
-	}
-
-	private int countTriples(){
-		int ret=0;
-		try{
-			RepositoryResult<Statement> result = repo.getConnection().getStatements((Resource)null, (URI)null, (Value)null, false);
-			while(result.hasNext()){
-				ret++;
-				result.next();
-			}
-			return ret;
-		} catch(RepositoryException e){
-			logger.error("Error while reading the triples in the repository");
-			return -1;
+			fail();
 		}
 	}
 
-	private void printTriples(){
-		try{
-			RepositoryResult<Statement> result = repo.getConnection().getStatements((Resource)null, (URI)null, (Value)null, false);
-			while(result.hasNext()){
-				Statement s = result.next();
-				logger.debug("{}", s);
-			}
-		} catch(RepositoryException e){
-			logger.error("Error while reading the triples in the repository");
-		}
-
-	}
 }
