@@ -64,9 +64,4 @@ public class TimestampedRelationElement{
 		tre.setTimestamp(timestamp);
 		return tre;
 	}
-	
-	@Override
-	public int hashCode() {
-		return outputTuple.hashCode();
-	}
 }

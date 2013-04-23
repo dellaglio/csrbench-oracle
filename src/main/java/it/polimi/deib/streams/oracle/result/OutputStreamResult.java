@@ -20,12 +20,16 @@ public class OutputStreamResult {
 		this.operator=operator;
 	}
 
-	public List<TimestampedRelationElement> getResults() {
+	public List<TimestampedRelationElement> getResultBindingLists() {
 		List<TimestampedRelationElement> ret = new ArrayList<TimestampedRelationElement>();
 		for(TimestampedRelation rel : results){
 			ret.addAll(rel.getElements());
 		}
 		return ret;
+	}
+
+	public List<TimestampedRelation> getResultRelations() {
+		return results;
 	}
 
 	public void addRelation(TimestampedRelation relation){
@@ -65,10 +69,10 @@ public class OutputStreamResult {
 		return ret.toString();
 	}
 
-	public boolean contains(OutputStreamResult rel){
-		for(TimestampedRelationElement tre : rel.getResults())
-			if(!results.contains(tre)) 
+	public boolean contains(OutputStreamResult outputStream){
+		for(TimestampedRelation tr : outputStream.getResultRelations())
+			if(!results.contains(tr)) 
 				return false;
-		return false;
+		return true;
 	}
 }

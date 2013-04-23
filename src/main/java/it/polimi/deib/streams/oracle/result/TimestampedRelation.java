@@ -55,4 +55,14 @@ public class TimestampedRelation {
 		return rel;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		if(!(obj instanceof TimestampedRelation))
+			return false;
+		for(TimestampedRelationElement tre : ((TimestampedRelation)obj).getElements())
+			if(!results.contains(tre))
+				return false;
+		return true;
+	}
+	
 }
