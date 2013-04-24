@@ -41,7 +41,7 @@ public class Oracle {
 		}
 	}
 
-	private OutputStreamResult executeStreamQuery(String booleanQuery, Window window, long t0, ReportPolicy policy, long lastTimestamp){
+	protected OutputStreamResult executeStreamQuery(String booleanQuery, Window window, long t0, ReportPolicy policy, long lastTimestamp){
 		OutputStreamResult ret = new OutputStreamResult();
 		Windower windower = new Windower(window, policy, t0);
 

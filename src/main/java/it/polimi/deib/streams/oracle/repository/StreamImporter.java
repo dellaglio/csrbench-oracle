@@ -1,6 +1,7 @@
 package it.polimi.deib.streams.oracle.repository;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import it.polimi.deib.streams.oracle.Config;
 
@@ -18,8 +19,9 @@ import org.slf4j.LoggerFactory;
 
 public class StreamImporter {
 	private final static Logger logger = LoggerFactory.getLogger(StreamImporter.class);
-	private Repository repo; 
-
+	protected Repository repo; 
+    ArrayList<String> graphs=new ArrayList<String>();
+	
 	public StreamImporter(){
 		this(Config.getInstance().getRepoDir());
 	}
@@ -64,7 +66,7 @@ public class StreamImporter {
 		return repo;
 	}
 	
-	private boolean existsGraph(URI graphName){
+	protected boolean existsGraph(URI graphName){
 		try {
 			return repo.getConnection().getStatements(graphName, null, null, false, BenchmarkVocab.graphList).hasNext();
 		} catch (RepositoryException e) {
