@@ -1,12 +1,12 @@
 package it.polimi.deib.streams.oracle;
 
+import it.polimi.deib.streams.oracle.query.StreamQuery;
 import it.polimi.deib.streams.oracle.repository.BenchmarkVocab;
 import it.polimi.deib.streams.oracle.result.OutputStreamResult;
 import it.polimi.deib.streams.oracle.result.TimestampedRelation;
 import it.polimi.deib.streams.oracle.result.TimestampedRelationElement;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
 import it.polimi.deib.streams.oracle.s2r.WindowScope;
-import it.polimi.deib.streams.oracle.s2r.Window;
 import it.polimi.deib.streams.oracle.s2r.Windower;
 
 import java.util.ArrayList;
@@ -41,9 +41,9 @@ public class Oracle {
 		}
 	}
 
-	protected OutputStreamResult executeStreamQuery(String booleanQuery, Window window, long t0, ReportPolicy policy, long lastTimestamp){
+	protected OutputStreamResult executeStreamQuery(StreamQuery query, long t0, ReportPolicy policy, long lastTimestamp){
 		OutputStreamResult ret = new OutputStreamResult();
-		Windower windower = new Windower(window, policy, t0);
+		Windower windower = new Windower(query.getWindowDefinition(), policy, t0);
 
 		try{
 		RepositoryConnection conn = repo.getConnection();
@@ -53,7 +53,7 @@ public class Oracle {
 			logger.debug("Block: [{},{})", tr.getFrom(), tr.getTo());
 			List<URI> graphs = getGraphsContent(tr);
 			if(graphs.size()>0){
-				TimestampedRelation rel = executeStreamQueryOverABlock(booleanQuery, graphs, tr.getTo());
+				TimestampedRelation rel = executeStreamQueryOverABlock(query.getBooleanQuery(), graphs, tr.getTo());
 				ret.addRelation(rel);
 			} else {
 				logger.debug("The content is empty and the non-empty content report policy is {}", policy.isNonEmptyContent());
@@ -138,21 +138,18 @@ public class Oracle {
 	public static void main(String[] args) {
 		Oracle oracle = new Oracle();
 	
-		String query = 
-				"SELECT ?room " +
-						"WHERE { " +
-						"<http://ex.org/instances#m1> <http://ex.org/detectedAt> ?room . " +
-						"<http://ex.org/instances#m2> <http://ex.org/detectedAt> ?room " +
-						"}";
-	
-		ReportPolicy policy = Config.getInstance().getPolicy();
-	
-		long actualT0 = Config.getInstance().getFirstT0();
-		for(;actualT0<10000;actualT0+=Config.getInstance().getTimeUnit()){
-			logger.debug("****** Window with t0={} *********",actualT0);
-			OutputStreamResult sr = oracle.executeStreamQuery(query,Config.getInstance().getWindow(), actualT0, policy, 20000);
-			logger.debug("Returned result: {}\n", sr);
+		for(String queryKey : Config.getInstance().getQuerySet()){
+			StreamQuery query = Config.getInstance().getQuery(queryKey);
+			ReportPolicy policy = Config.getInstance().getPolicy();
+			
+			long actualT0 = Config.getInstance().getFirstT0();
+			for(;actualT0<10000;actualT0+=Config.getInstance().getTimeUnit()){
+				logger.debug("****** Window with t0={} *********",actualT0);
+				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 20000);
+				logger.debug("Returned result: {}\n", sr);
+			}
 		}
+		
 	}
 	
 	

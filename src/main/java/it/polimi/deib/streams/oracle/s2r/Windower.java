@@ -10,16 +10,17 @@ import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
 
 import it.polimi.deib.streams.oracle.Config;
+import it.polimi.deib.streams.oracle.query.WindowDefinition;
 import it.polimi.deib.streams.oracle.repository.BenchmarkVocab;
 
 
 public class Windower {
-	private Window window;
+	private WindowDefinition window;
 	private ReportPolicy policy;
 	private final long t0;
 	private long actualTime;
 	
-	public Windower(Window window, ReportPolicy policy, long t0) {
+	public Windower(WindowDefinition window, ReportPolicy policy, long t0) {
 		super();
 		this.window = window;
 		this.policy = policy;
@@ -27,10 +28,10 @@ public class Windower {
 		actualTime=t0;
 	}
 	
-	public Window getWindow() {
+	public WindowDefinition getWindow() {
 		return window;
 	}
-	public void setWindow(Window window) {
+	public void setWindow(WindowDefinition window) {
 		this.window = window;
 	}
 	

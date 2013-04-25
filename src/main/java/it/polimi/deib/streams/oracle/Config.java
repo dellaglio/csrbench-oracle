@@ -1,7 +1,8 @@
 package it.polimi.deib.streams.oracle;
 
+import it.polimi.deib.streams.oracle.query.StreamQuery;
+import it.polimi.deib.streams.oracle.query.WindowDefinition;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
-import it.polimi.deib.streams.oracle.s2r.Window;
 
 import java.io.File;
 
@@ -31,8 +32,15 @@ public class Config {
 		return ret;
 	}
 	
-	public Window getWindow(){
-		return new Window(config.getLong("window.size"), config.getLong("window.slide"));
+	public StreamQuery getQuery(String key){
+		StreamQuery ret = new StreamQuery();
+		ret.setBooleanQuery(config.getString(key+".booleanquery"));
+		ret.setWindowDefinition(new WindowDefinition(config.getLong(key+".window.size"), config.getLong(key+".window.slide")));
+		return ret;
+	}
+	
+	public String[] getQuerySet(){
+		return config.getStringArray("queryset");
 	}
 	
 	public Long getFirstT0(){
