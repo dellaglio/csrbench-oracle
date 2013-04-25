@@ -1,13 +1,13 @@
-package it.polimi.deib.streams.oracle.s2r;
+package it.polimi.deib.streams.oracle.query;
 
-public class Window {
+public class WindowDefinition {
 	private long size, slide;
 	
-	public Window() {
+	public WindowDefinition() {
 		super();
 	}
 
-	public Window(long size, long slide) {
+	public WindowDefinition(long size, long slide) {
 		super();
 		this.size = size;
 		this.slide = slide;

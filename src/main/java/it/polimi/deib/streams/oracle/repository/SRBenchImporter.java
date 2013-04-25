@@ -2,22 +2,14 @@ package it.polimi.deib.streams.oracle.repository;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Iterator;
 
 import org.openrdf.model.Graph;
-import org.openrdf.model.Resource;
-import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
-import org.openrdf.model.Value;
-import org.openrdf.model.impl.GraphImpl;
 import org.openrdf.model.impl.NumericLiteralImpl;
 import org.openrdf.model.impl.TreeModel;
-import org.openrdf.model.impl.URIImpl;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.MalformedQueryException;
-import org.openrdf.query.Query;
 import org.openrdf.query.QueryEvaluationException;
 import org.openrdf.query.QueryLanguage;
 import org.openrdf.query.TupleQuery;
@@ -35,8 +27,6 @@ import org.slf4j.LoggerFactory;
 
 public class SRBenchImporter extends StreamImporter{
 	private final static Logger logger = LoggerFactory.getLogger(SRBenchImporter.class);
-
-	//StreamImporter si = new StreamImporter();
 
 	public void addTimestampedData(File f, long timestamp) throws RDFParseException, IOException, RepositoryException{
 		URI graph = BenchmarkVocab.getGraphURI(timestamp);
@@ -94,8 +84,7 @@ public class SRBenchImporter extends StreamImporter{
 			rdfParser.parse(new FileInputStream(file), "http://example.com/");
 		} catch (RDFParseException | RDFHandlerException
 				 | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Error while parsing the file "+ file, e);
 		}
 		logger.debug("Finished parse");
 		return myGraph;
