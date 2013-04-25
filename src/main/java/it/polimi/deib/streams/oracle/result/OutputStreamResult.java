@@ -70,9 +70,22 @@ public class OutputStreamResult {
 	}
 
 	public boolean contains(OutputStreamResult outputStream){
-		for(TimestampedRelation tr : outputStream.getResultRelations())
-			if(!results.contains(tr)) 
-				return false;
-		return true;
+		List<TimestampedRelation> subSeq = outputStream.getResultRelations();
+		TimestampedRelation firstResult = subSeq.get(0);
+		for(int i=0; i<results.size(); i++){
+			if(results.get(i).equals(firstResult)){
+				boolean exit=false;
+				int j=i+1;
+				for(int k=1; k<subSeq.size() && exit==false;){
+					if(!results.get(j++).equals(subSeq.get(k++)))
+						exit=true;
+					if(j>=results.size() && k<subSeq.size())
+						exit=true;
+				}
+				if(!exit)
+					return true;
+			}
+		}
+		return false;
 	}
 }

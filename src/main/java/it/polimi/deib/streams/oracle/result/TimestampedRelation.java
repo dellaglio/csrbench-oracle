@@ -62,6 +62,9 @@ public class TimestampedRelation {
 		for(TimestampedRelationElement tre : ((TimestampedRelation)obj).getElements())
 			if(!results.contains(tre))
 				return false;
+		for(TimestampedRelationElement tre : results)
+			if(!((TimestampedRelation)obj).getElements().contains(tre))
+				return false;
 		return true;
 	}
 	
