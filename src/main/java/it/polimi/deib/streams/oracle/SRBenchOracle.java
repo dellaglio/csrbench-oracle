@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import it.polimi.deib.streams.oracle.result.OutputStreamResult;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
 
+@Deprecated //use Oracle instead
 public class SRBenchOracle extends Oracle{
 	private final static Logger logger = LoggerFactory.getLogger(SRBenchOracle.class);
 
@@ -15,7 +16,6 @@ public class SRBenchOracle extends Oracle{
 	
 	static String q1=prefixes+"SELECT ?sensor " +
 			"WHERE { " +
-			//"?value ?p ?s."+
 			" ?obs om-owl:observedProperty weather:_AirTemperature ; "+
 		    "      om-owl:procedure ?sensor ; "+
 		    "      om-owl:result ?res . "+
