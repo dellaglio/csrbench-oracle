@@ -1,4 +1,6 @@
-package it.polimi.deib.streams.oracle;
+package it.polimi.deib.streams.oracle.repository;
+
+import java.io.File;
 
 import it.polimi.deib.streams.oracle.repository.RepoUtility;
 import it.polimi.deib.streams.oracle.repository.StreamImporter;
@@ -21,7 +23,7 @@ public class StreamImporterTest {
 	private StreamImporter si ;
 
 	@Before public void setup(){
-		si = new StreamImporter();
+		si = new StreamImporter(new File("test-repository"));
 		repo = si.getRepository();
 		try {
 			if(RepoUtility.countTriples(logger, repo.getConnection())>0)
