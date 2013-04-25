@@ -1,4 +1,4 @@
-package it.polimi.deib.streams.oracle;
+package it.polimi.deib.streams.oracle.s2r;
 
 import java.io.File;
 

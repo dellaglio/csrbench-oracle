@@ -11,5 +11,9 @@
 	<root level="DEBUG">
 		<appender-ref ref="STDOUT" />
 	</root>
+	
+	<logger name="org.openrdf" level="INFO">
+		<appender-ref ref="STDOUT" />
+	</logger>
 
 </configuration>

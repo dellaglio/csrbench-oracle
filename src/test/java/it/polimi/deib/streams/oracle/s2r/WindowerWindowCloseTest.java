@@ -1,4 +1,4 @@
-package it.polimi.deib.streams.oracle;
+package it.polimi.deib.streams.oracle.s2r;
 
 import it.polimi.deib.streams.oracle.query.WindowDefinition;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;

@@ -56,13 +56,59 @@ public class TimestampedRelation {
 	}
 	
 	@Override
+	public String toString() {
+		StringBuilder ret = new StringBuilder();
+		for(TimestampedRelationElement srr : results)
+			ret.append(srr.toString());
+		return ret.toString();
+	}
+
+	
+//	@Override
+//	public boolean equals2(Object obj) {
+//		if(!(obj instanceof TimestampedRelation))
+//			return false;
+//		System.out.println("a");
+//		for(TimestampedRelationElement elem : results)
+//			System.out.println(elem);
+//		for(TimestampedRelationElement tre : ((TimestampedRelation)obj).getElements()){
+//			System.out.println(tre);
+//			if(!results.contains(tre))
+//				return false;
+//		}
+//		System.out.println("b");
+//		for(TimestampedRelationElement tre : results)
+//			if(!((TimestampedRelation)obj).getElements().contains(tre))
+//				return false;
+//		System.out.println("c");
+//		return true;
+//	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((results == null) ? 0 : results.hashCode());
+		return result;
+	}
+
+	@Override
 	public boolean equals(Object obj) {
-		if(!(obj instanceof TimestampedRelation))
+		if (this == obj)
+			return true;
+		if (obj == null)
 			return false;
-		for(TimestampedRelationElement tre : ((TimestampedRelation)obj).getElements())
-			if(!results.contains(tre))
+		if (getClass() != obj.getClass())
+			return false;
+		TimestampedRelation other = (TimestampedRelation) obj;
+		if (results == null) {
+			if (other.results != null)
 				return false;
+		} else if (!results.equals(other.results))
+			return false;
 		return true;
 	}
+	
+	
 	
 }
