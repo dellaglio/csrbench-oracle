@@ -138,11 +138,11 @@ public class Oracle {
 	public static void main(String[] args) {
 		Oracle oracle = new Oracle();
 	
+		ReportPolicy policy = Config.getInstance().getPolicy();
 		for(String queryKey : Config.getInstance().getQuerySet()){
 			StreamQuery query = Config.getInstance().getQuery(queryKey);
-			ReportPolicy policy = Config.getInstance().getPolicy();
 			
-			long actualT0 = Config.getInstance().getFirstT0();
+			long actualT0 = query.getFirstT0();
 			for(;actualT0<10000;actualT0+=Config.getInstance().getTimeUnit()){
 				logger.debug("****** Window with t0={} *********",actualT0);
 				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 20000);

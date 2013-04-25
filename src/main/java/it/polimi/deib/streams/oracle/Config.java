@@ -36,15 +36,12 @@ public class Config {
 		StreamQuery ret = new StreamQuery();
 		ret.setBooleanQuery(config.getString(key+".booleanquery"));
 		ret.setWindowDefinition(new WindowDefinition(config.getLong(key+".window.size"), config.getLong(key+".window.slide")));
+		ret.setFirstT0(config.getLong(key+".window.firstt0"));
 		return ret;
 	}
 	
 	public String[] getQuerySet(){
 		return config.getStringArray("queryset");
-	}
-	
-	public Long getFirstT0(){
-		return config.getLong("window.firstt0");
 	}
 	
 	public Long getTimeUnit(){
