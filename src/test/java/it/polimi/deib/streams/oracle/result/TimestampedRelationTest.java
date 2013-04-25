@@ -1,10 +1,9 @@
 package it.polimi.deib.streams.oracle.result;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
+import it.polimi.deib.streams.oracle.Utility;
+
+import org.junit.Before;
 import org.junit.Test;
-import org.openrdf.model.impl.URIImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -14,37 +13,18 @@ public class TimestampedRelationTest {
 	private static final Logger logger = LoggerFactory.getLogger(TimestampedRelationTest.class);
 	private TimestampedRelation oracleRel;
 	private TimestampedRelation streamProcRel;
-	
-	private static TimestampedRelation importRelation(String filename){
-		try {
-			TimestampedRelation ret;
-			Configuration relationImporter = new PropertiesConfiguration(filename);
 
-			ret = new TimestampedRelation();
-			ret.setComputationTimestamp(relationImporter.getLong("timestamp"));
-			
-			for(String s : relationImporter.getStringArray("sensor")){
-				TimestampedRelationElement tre = new TimestampedRelationElement();
-				tre.add("sensor", new URIImpl(s));
-				tre.setTimestamp(20000);
-			}
-			return ret;
-		} catch (ConfigurationException e) {
-			logger.error("Error while reading the configuration file", e);
-			fail();
-		}
-		return null;
+	@Before
+	public void setup(){
+		streamProcRel = Utility.importRelation("timestampedrelation20.properties", logger);
+		oracleRel = Utility.importRelation("timestampedrelation20.properties", logger);
 	}
 	
 	@Test public void twoEqualRelationsShouldBeEquals(){
-		streamProcRel = importRelation("timestampedrelation20.properties");
-		oracleRel = importRelation("timestampedrelation20.properties");
 		assertTrue(oracleRel.equals(streamProcRel));
 	}
 
 	@Test public void twoDifferentRelationsShouldNotBeEquals(){
-		streamProcRel = importRelation("timestampedrelation20.properties");
-		oracleRel = importRelation("timestampedrelation20.properties");
 		TimestampedRelationElement tre = new TimestampedRelationElement();
 		tre.add("sensor", "http://ex.org/additionalElement");
 		tre.setTimestamp(0);
@@ -54,14 +34,10 @@ public class TimestampedRelationTest {
 	}
 	
 	@Test public void differenceBetweenTwoEqualRelationsProducesAnEmptyRelation(){
-		streamProcRel = importRelation("timestampedrelation20.properties");
-		oracleRel = importRelation("timestampedrelation20.properties");
 		assertEquals(0, streamProcRel.minus(oracleRel).size());
 	}
 
 	@Test public void differenceBetweenTwoDifferentRelationsProducesANonEmptyRelation(){
-		streamProcRel = importRelation("timestampedrelation20.properties");
-		oracleRel = importRelation("timestampedrelation20.properties");
 		TimestampedRelationElement tre = new TimestampedRelationElement();
 		tre.add("sensor", "http://ex.org/additionalElement");
 		tre.setTimestamp(0);
