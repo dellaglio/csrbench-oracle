@@ -18,7 +18,7 @@ public class TimestampedRelationTest {
 	private static TimestampedRelation importRelation(String filename){
 		try {
 			TimestampedRelation ret;
-			Configuration relationImporter = new PropertiesConfiguration("timestampedrelation.properties");
+			Configuration relationImporter = new PropertiesConfiguration(filename);
 
 			ret = new TimestampedRelation();
 			ret.setComputationTimestamp(relationImporter.getLong("timestamp"));
@@ -37,14 +37,14 @@ public class TimestampedRelationTest {
 	}
 	
 	@Test public void twoEqualRelationsShouldBeEquals(){
-		streamProcRel = importRelation("timestampedrelation.properties");
-		oracleRel = importRelation("timestampedrelation.properties");
+		streamProcRel = importRelation("timestampedrelation20.properties");
+		oracleRel = importRelation("timestampedrelation20.properties");
 		assertTrue(oracleRel.equals(streamProcRel));
 	}
 
 	@Test public void twoDifferentRelationsShouldNotBeEquals(){
-		streamProcRel = importRelation("timestampedrelation.properties");
-		oracleRel = importRelation("timestampedrelation.properties");
+		streamProcRel = importRelation("timestampedrelation20.properties");
+		oracleRel = importRelation("timestampedrelation20.properties");
 		TimestampedRelationElement tre = new TimestampedRelationElement();
 		tre.add("sensor", "http://ex.org/additionalElement");
 		tre.setTimestamp(0);
@@ -54,14 +54,14 @@ public class TimestampedRelationTest {
 	}
 	
 	@Test public void differenceBetweenTwoEqualRelationsProducesAnEmptyRelation(){
-		streamProcRel = importRelation("timestampedrelation.properties");
-		oracleRel = importRelation("timestampedrelation.properties");
+		streamProcRel = importRelation("timestampedrelation20.properties");
+		oracleRel = importRelation("timestampedrelation20.properties");
 		assertEquals(0, streamProcRel.minus(oracleRel).size());
 	}
 
 	@Test public void differenceBetweenTwoDifferentRelationsProducesANonEmptyRelation(){
-		streamProcRel = importRelation("timestampedrelation.properties");
-		oracleRel = importRelation("timestampedrelation.properties");
+		streamProcRel = importRelation("timestampedrelation20.properties");
+		oracleRel = importRelation("timestampedrelation20.properties");
 		TimestampedRelationElement tre = new TimestampedRelationElement();
 		tre.add("sensor", "http://ex.org/additionalElement");
 		tre.setTimestamp(0);
