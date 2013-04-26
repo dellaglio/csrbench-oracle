@@ -145,7 +145,7 @@ public class Oracle {
 			long actualT0 = query.getFirstT0();
 			for(;actualT0<10000;actualT0+=Config.getInstance().getTimeUnit()){
 				logger.debug("****** Window with t0={} *********",actualT0);
-				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 20000);
+				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 30000);
 				logger.debug("Returned result: {}\n", sr);
 			}
 		}

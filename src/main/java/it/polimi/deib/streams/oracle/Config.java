@@ -52,6 +52,7 @@ public class Config {
 		ReportPolicy ret = new ReportPolicy();
 		ret.setWindowClose(config.getBoolean("system.policy.windowclose"));
 		ret.setNonEmptyContent(config.getBoolean("system.policy.nonemptycontent"));
+		ret.setContentChange(config.getBoolean("system.policy.contentchange"));
 		return ret;
 	}
 	
