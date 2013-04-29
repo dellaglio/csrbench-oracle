@@ -8,21 +8,17 @@ import it.polimi.deib.streams.oracle.result.OutputStreamResult;
 import it.polimi.deib.streams.oracle.result.TimestampedRelation;
 import it.polimi.deib.streams.oracle.result.TimestampedRelationElement;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
 
-import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.JsonParser;
 import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
-import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
 import org.openrdf.model.URI;
@@ -35,7 +31,7 @@ public class JsonConverter {
 	private static final Logger logger=LoggerFactory.getLogger(JsonConverter.class); 
 	
 	public JsonConverter(){
-		ObjectMapper mapper = new ObjectMapper();
+		mapper = new ObjectMapper();
 
 		SimpleModule oracleModule = new SimpleModule("OracleModule", new Version(1, 0, 0, null));
 		oracleModule.addSerializer(new URISerializer());
