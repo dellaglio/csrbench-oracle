@@ -89,9 +89,9 @@ public class JSonSerializer {
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		//		oracleResult.addRelation(Utility.importRelation("timestampedrelation20.properties", logger));
 		try {
-//			mapper.writeValue(System.out, oracleResult);
-			OutputStreamResult osr = mapper.readValue(s, OutputStreamResult.class);
-			logger.info("Parsed stream: {}", osr);
+			mapper.writeValue(System.out, oracleResult);
+//			OutputStreamResult osr = mapper.readValue(s, OutputStreamResult.class);
+//			logger.info("Parsed stream: {}", osr);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
