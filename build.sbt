@@ -16,6 +16,7 @@ libraryDependencies ++= Seq(
   "org.openrdf.sesame" % "sesame-runtime" % "2.7.0",
   "commons-configuration" % "commons-configuration" % "1.9",
   "ch.qos.logback" % "logback-classic" % "1.0.11",
+  "org.codehaus.jackson" % "jackson-jaxrs" % "1.9.12",
   "junit" % "junit" % "4.7" % "test",
   "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test",
   "org.scalacheck" % "scalacheck_2.10" % "1.10.0" % "test"
