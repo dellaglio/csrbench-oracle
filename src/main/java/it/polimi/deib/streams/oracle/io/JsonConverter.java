@@ -21,8 +21,12 @@ import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
+import org.openrdf.model.Literal;
 import org.openrdf.model.URI;
+import org.openrdf.model.ValueFactory;
+import org.openrdf.model.impl.LiteralImpl;
 import org.openrdf.model.impl.URIImpl;
+import org.openrdf.model.impl.ValueFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +66,7 @@ public class JsonConverter {
 						vars[i]=varsNode.get(i).asText();
 
 					Iterator<JsonNode> bit = results.iterator();
+					ValueFactory vf = new ValueFactoryImpl();
 					while(bit.hasNext()){
 						TimestampedRelationElement tre = new TimestampedRelationElement();
 
@@ -70,11 +75,19 @@ public class JsonConverter {
 						for(String var : vars){
 							JsonNode value = element.get("binding").get(var);
 							if(value.get("type").asText().equals("uri")){
-								URI uri = new URIImpl(value.get("value").asText());
+								URI uri = vf.createURI(value.get("value").asText()); 
+										//new URIImpl(value.get("value").asText());
 								tre.add(var, uri);
 							}
-							else
-								throw new RuntimeException("not a uri");
+							else if(value.get("type").asText().equals("literal")){
+								Literal literal;
+								if(value.get("xml:lang")==null)
+									literal = vf.createLiteral(value.get("xml:lang").asText());
+								else
+									literal = vf.createLiteral(value.get("value").asText());
+								tre.add(var, literal);
+							}
+							else throw new RuntimeException("not a uri or literal");
 						}
 						tr.addElement(tre);
 					}
