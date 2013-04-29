@@ -15,7 +15,7 @@ public class TimestampedRelationElement{
 		outputTuple.put(key, value);
 	}
 
-	Map<String,Object> getBinding() {
+	public Map<String,Object> getBinding() {
 		return outputTuple;
 	}
 

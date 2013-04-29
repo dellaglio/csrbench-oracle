@@ -10,6 +10,7 @@ srb.query1.booleanquery = PREFIX om-owl: <http://knoesis.wright.edu/ssw/ont/sens
 srb.query1.window.size = 10000
 srb.query1.window.slide = 10000
 srb.query1.window.firstt0 = 0
+srb.query1.output=rstream
 
 #Time based sliding window (1s,1s) with first t0 = 0s
 srb.query2.booleanquery = PREFIX om-owl: <http://knoesis.wright.edu/ssw/ont/sensor-observation.owl#> \
@@ -52,7 +53,7 @@ srb.query4.booleanquery = PREFIX om-owl: <http://knoesis.wright.edu/ssw/ont/sens
 srb.query4.window.size = 4000
 srb.query4.window.slide = 4000
 srb.query4.window.firstt0 = 0
-srb.query1.output=rstream
+<<<<<<< HEAD
 
 #Time based sliding window (10s,1s) with first t0 = 0s
 srb.query5.booleanquery = PREFIX om-owl: <http://knoesis.wright.edu/ssw/ont/sensor-observation.owl#> \
@@ -66,3 +67,6 @@ srb.query5.booleanquery = PREFIX om-owl: <http://knoesis.wright.edu/ssw/ont/sens
 srb.query5.window.size = 3000
 srb.query5.window.slide = 1000
 srb.query5.window.firstt0 = 0
+=======
+srb.query1.output=rstream
+>>>>>>> 8c1ca07c4567f7bf91b59763b1a46c642eef4eed
