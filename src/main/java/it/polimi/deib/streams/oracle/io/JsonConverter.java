@@ -1,5 +1,6 @@
 package it.polimi.deib.streams.oracle.io;
 
+import it.polimi.deib.streams.oracle.io.serializer.LiteralSerializer;
 import it.polimi.deib.streams.oracle.io.serializer.OutputStreamResultSerializer;
 import it.polimi.deib.streams.oracle.io.serializer.TimestampedRelationElementSerializer;
 import it.polimi.deib.streams.oracle.io.serializer.TimestampedRelationSerializer;
@@ -24,8 +25,6 @@ import org.codehaus.jackson.map.module.SimpleModule;
 import org.openrdf.model.Literal;
 import org.openrdf.model.URI;
 import org.openrdf.model.ValueFactory;
-import org.openrdf.model.impl.LiteralImpl;
-import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.impl.ValueFactoryImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +38,7 @@ public class JsonConverter {
 
 		SimpleModule oracleModule = new SimpleModule("OracleModule", new Version(1, 0, 0, null));
 		oracleModule.addSerializer(new URISerializer());
+		oracleModule.addSerializer(new LiteralSerializer());
 		oracleModule.addSerializer(new TimestampedRelationElementSerializer());
 		oracleModule.addSerializer(new TimestampedRelationSerializer());
 		oracleModule.addSerializer(new OutputStreamResultSerializer());
