@@ -1,4 +1,4 @@
-package it.polimi.deib.streams.oracle.result.json.serializer;
+package it.polimi.deib.streams.oracle.io.serializer;
 
 import java.io.IOException;
 

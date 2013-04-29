@@ -1,15 +1,16 @@
-package it.polimi.deib.streams.oracle;
+package it.polimi.deib.streams.oracle.io;
 
 import java.io.IOException;
 import java.util.Iterator;
 
+import it.polimi.deib.streams.oracle.Utility;
+import it.polimi.deib.streams.oracle.io.serializer.OutputStreamResultSerializer;
+import it.polimi.deib.streams.oracle.io.serializer.TimestampedRelationElementSerializer;
+import it.polimi.deib.streams.oracle.io.serializer.TimestampedRelationSerializer;
+import it.polimi.deib.streams.oracle.io.serializer.URISerializer;
 import it.polimi.deib.streams.oracle.result.OutputStreamResult;
 import it.polimi.deib.streams.oracle.result.TimestampedRelation;
 import it.polimi.deib.streams.oracle.result.TimestampedRelationElement;
-import it.polimi.deib.streams.oracle.result.json.serializer.OutputStreamResultSerializer;
-import it.polimi.deib.streams.oracle.result.json.serializer.TimestampedRelationElementSerializer;
-import it.polimi.deib.streams.oracle.result.json.serializer.TimestampedRelationSerializer;
-import it.polimi.deib.streams.oracle.result.json.serializer.URISerializer;
 
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.JsonParser;
@@ -24,8 +25,8 @@ import org.openrdf.model.impl.URIImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class JSonSerializer {
-	private static final Logger logger = LoggerFactory.getLogger(JSonSerializer.class);
+public class JSonConverterTest {
+	private static final Logger logger = LoggerFactory.getLogger(JSonConverterTest.class);
 
 	public static void main(String[] args) {
 		ObjectMapper mapper = new ObjectMapper();

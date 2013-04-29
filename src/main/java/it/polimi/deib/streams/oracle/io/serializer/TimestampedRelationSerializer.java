@@ -1,4 +1,4 @@
-package it.polimi.deib.streams.oracle.result.json.serializer;
+package it.polimi.deib.streams.oracle.io.serializer;
 
 import it.polimi.deib.streams.oracle.result.TimestampedRelation;
 import it.polimi.deib.streams.oracle.result.TimestampedRelationElement;
