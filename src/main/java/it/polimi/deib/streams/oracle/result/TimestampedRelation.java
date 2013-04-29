@@ -19,7 +19,7 @@ public class TimestampedRelation {
 		this.computationTimestamp = computationTimestamp;
 	}
 
-	public Set<TimestampedRelationElement> getElements() {
+	public Set<TimestampedRelationElement> getBindings() {
 		return results;
 	}
 
@@ -41,7 +41,7 @@ public class TimestampedRelation {
 
 	public Set<TimestampedRelationElement> minus(TimestampedRelation subtrahendRelation){
 		Set<TimestampedRelationElement> ret = new HashSet<TimestampedRelationElement>();
-		Set<TimestampedRelationElement> subtrahend = subtrahendRelation.getElements();
+		Set<TimestampedRelationElement> subtrahend = subtrahendRelation.getBindings();
 		for(TimestampedRelationElement elem : results){
 			if(!subtrahend.contains(elem))
 				ret.add(elem);

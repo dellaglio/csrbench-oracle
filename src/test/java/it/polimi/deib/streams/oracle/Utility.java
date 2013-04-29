@@ -22,7 +22,8 @@ public class Utility {
 			for(String s : relationImporter.getStringArray("sensor")){
 				TimestampedRelationElement tre = new TimestampedRelationElement();
 				tre.add("sensor", new URIImpl(s));
-				tre.setTimestamp(20000);
+				//FIXME: should import the element timestamp!
+				tre.setTimestamp(relationImporter.getLong("timestamp"));
 				ret.addElement(tre);
 			}
 			return ret;

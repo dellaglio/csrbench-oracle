@@ -28,7 +28,7 @@ public class OutputStreamResult {
 	public List<TimestampedRelationElement> getResultBindingLists() {
 		List<TimestampedRelationElement> ret = new ArrayList<TimestampedRelationElement>();
 		for(TimestampedRelation rel : results){
-			ret.addAll(rel.getElements());
+			ret.addAll(rel.getBindings());
 		}
 		return ret;
 	}
@@ -39,25 +39,25 @@ public class OutputStreamResult {
 
 	public void addRelation(TimestampedRelation relation){
 		if(operator.equals(S2ROperator.Rstream)){
-			if(relation.getElements().size()==0)
+			if(relation.getBindings().size()==0)
 				relation.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
 			results.add(relation);
 		} else if(operator.equals(S2ROperator.Istream)){
 			if(previousRelation==null){
-				if(relation.getElements().size()==0)
+				if(relation.getBindings().size()==0)
 					relation.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
 				results.add(relation);
 			}
 			else{
 				TimestampedRelation diff = new TimestampedRelation(relation.minus(previousRelation), relation.getComputationTimestamp());
-				if(diff.getElements().size()==0)
+				if(diff.getBindings().size()==0)
 					diff.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
 				results.add(diff);
 			}
 		} else { //Dstream
 			if(previousRelation!=null){
 				TimestampedRelation diff = new TimestampedRelation(previousRelation.minus(relation), relation.getComputationTimestamp());
-				if(diff.getElements().size()==0)
+				if(diff.getBindings().size()==0)
 					diff.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
 				results.add(diff);
 			}
@@ -69,7 +69,7 @@ public class OutputStreamResult {
 	public String toString() {
 		StringBuilder ret = new StringBuilder();
 		for(TimestampedRelation rel: results)
-			for(TimestampedRelationElement srr : rel.getElements())
+			for(TimestampedRelationElement srr : rel.getBindings())
 				ret.append(srr.toString());
 		return ret.toString();
 	}
@@ -98,4 +98,35 @@ public class OutputStreamResult {
 		}
 		return false;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((operator == null) ? 0 : operator.hashCode());
+		result = prime * result + ((results == null) ? 0 : results.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		OutputStreamResult other = (OutputStreamResult) obj;
+		if (operator != other.operator)
+			return false;
+		if (results == null) {
+			if (other.results != null)
+				return false;
+		} else if (!results.equals(other.results))
+			return false;
+		return true;
+	}
+	
+	
 }
