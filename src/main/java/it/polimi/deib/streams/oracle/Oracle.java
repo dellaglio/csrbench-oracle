@@ -1,5 +1,6 @@
 package it.polimi.deib.streams.oracle;
 
+import it.polimi.deib.streams.oracle.io.JsonConverter;
 import it.polimi.deib.streams.oracle.query.StreamQuery;
 import it.polimi.deib.streams.oracle.repository.BenchmarkVocab;
 import it.polimi.deib.streams.oracle.result.OutputStreamResult;
@@ -9,6 +10,7 @@ import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
 import it.polimi.deib.streams.oracle.s2r.WindowScope;
 import it.polimi.deib.streams.oracle.s2r.Windower;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,6 +149,10 @@ public class Oracle {
 				logger.debug("****** Window with t0={} *********",actualT0);
 				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 30000);
 				logger.debug("Returned result: {}\n", sr);
+				JsonConverter converter = new JsonConverter();
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				converter.encodeJson(baos, sr);
+				System.out.println(baos.toString());
 			}
 		}
 		

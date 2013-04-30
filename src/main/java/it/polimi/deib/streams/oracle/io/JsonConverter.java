@@ -81,7 +81,7 @@ public class JsonConverter {
 							}
 							else if(value.get("type").asText().equals("literal")){
 								Literal literal;
-								if(value.get("xml:lang")==null)
+								if(value.get("xml:lang")!=null)
 									literal = vf.createLiteral(value.get("xml:lang").asText());
 								else
 									literal = vf.createLiteral(value.get("value").asText());
@@ -111,7 +111,7 @@ public class JsonConverter {
 		return null;
 	}
 	
-	void encodeJson(OutputStream os, OutputStreamResult res){
+	public void encodeJson(OutputStream os, OutputStreamResult res){
 		try {
 			mapper.writeValue(os, res);
 		} catch (IOException e) {
