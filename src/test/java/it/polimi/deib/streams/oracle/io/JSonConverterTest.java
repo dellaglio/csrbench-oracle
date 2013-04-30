@@ -40,4 +40,11 @@ public class JSonConverterTest {
 
 		assertEquals(result, oracleResult);
 	}
+	
+	@Test public void shouldDecodeResultsinFile(){
+        JsonConverter converter = new JsonConverter();				
+		OutputStreamResult result = converter.decodeJson(
+				getClass().getClassLoader().getResourceAsStream("testresult.json"));
+		
+	}
 }
