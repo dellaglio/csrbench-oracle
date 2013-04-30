@@ -11,3 +11,4 @@ output/
 project/boot/
 test-repository/
 srbench-repository/
+.DS_Store
