@@ -3,7 +3,12 @@ package it.polimi.deib.streams.oracle.repository;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.apache.commons.configuration.Configuration;
+import org.apache.commons.configuration.ConfigurationException;
+import org.apache.commons.configuration.PropertiesConfiguration;
 import org.openrdf.model.Graph;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.NumericLiteralImpl;
@@ -27,7 +32,23 @@ import org.slf4j.LoggerFactory;
 
 public class SRBenchImporter extends StreamImporter{
 	private final static Logger logger = LoggerFactory.getLogger(SRBenchImporter.class);
-
+	private Configuration conf=null;
+	private int max=0;
+	private long interval=0;
+	private List exclude=null;
+	
+	public SRBenchImporter(){
+		try {
+			conf = new PropertiesConfiguration("setup.properties");
+		} catch (ConfigurationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		max=conf.getInt("importdata.maxtime");
+		interval=conf.getLong("importdata.interval");
+		exclude=conf.getList("importdata.exclude");
+	}
+	
 	public void addTimestampedData(File f, long timestamp) throws RDFParseException, IOException, RepositoryException{
 		URI graph = BenchmarkVocab.getGraphURI(timestamp);
 		repo.getConnection().begin();
@@ -39,22 +60,14 @@ public class SRBenchImporter extends StreamImporter{
 	}
 	
 	public void importData(int time) throws RDFParseException, IOException, RepositoryException{
-		addTimestampedData(new File("data/data_"+time+".ttl"), time*1000);
-/*
-		//Graph g=read("data/data_"+time+".ttl");
-		//int count=g.size()/100;
-		int i=0;
-		Iterator<Statement> it=g.iterator();
-		while (it.hasNext()){
-			Statement st=it.next();
-			i++;
-			try {
-				//logger.debug("added new");
-			} catch (RepositoryException e) {				
-				e.printStackTrace();
-			}
+		addTimestampedData(new File("data/data_"+time+".ttl"), time*interval);
+	}
+	
+	public void importAllData() throws RDFParseException, RepositoryException, IOException{
+		for (int i=0;i<=max;i++){
+			if (!exclude.contains(""+i))
+			  importData(i);
 		}
-	*/	
 			
 	}
 	
@@ -73,7 +86,7 @@ public class SRBenchImporter extends StreamImporter{
 	    	logger.info(bind.getValue("g").stringValue());
 		}
 	}
-	
+	/*
 	public Graph read(String file){
 		RDFParser rdfParser = Rio.createParser(RDFFormat.TURTLE);
 		Graph myGraph = new TreeModel();
@@ -88,15 +101,14 @@ public class SRBenchImporter extends StreamImporter{
 		}
 		logger.debug("Finished parse");
 		return myGraph;
-	}
+	}*/
 	public static void main(String[] args)   {
 		SRBenchImporter sr=new SRBenchImporter();
+		logger.debug("clean repository");
 		try {
 			sr.clearRepository();
-	
-		for (int i=0;i<=21;i++){
-		  sr.importData(i);
-		}
+		logger.debug("importing the data");	
+	        sr.importAllData();
 		logger.debug("finished import");
 	
 			sr.getGraphs();

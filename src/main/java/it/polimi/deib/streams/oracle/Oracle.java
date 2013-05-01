@@ -145,9 +145,9 @@ public class Oracle {
 			StreamQuery query = Config.getInstance().getQuery(queryKey);
 			
 			long actualT0 = query.getFirstT0();
-			for(;actualT0<10000;actualT0+=Config.getInstance().getTimeUnit()){
+			for(;actualT0<1000;actualT0+=Config.getInstance().getTimeUnit()){
 				logger.debug("****** Window with t0={} *********",actualT0);
-				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 30000);
+				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 3000);
 				logger.debug("Returned result: {}\n", sr);
 				JsonConverter converter = new JsonConverter();
 				ByteArrayOutputStream baos = new ByteArrayOutputStream();
