@@ -50,11 +50,7 @@ public class Config {
 		String answer = config.getString(key+".answer");
 		if(answer!=null){
 			InputStream is = getClass().getClassLoader().getResourceAsStream(answer);
-			System.out.println("---> "+answer + " "+is);
 			OutputStreamResult result = converter.decodeJson(is);
-
-//			InputStream is = new ByteArrayInputStream(answer.getBytes());
-//			OutputStreamResult a = converter.decodeJson(is);
 			ret.setAnswer(result);
 		}
 
