@@ -1,6 +1,5 @@
 package it.polimi.deib.streams.oracle;
 
-import it.polimi.deib.streams.oracle.io.JsonConverter;
 import it.polimi.deib.streams.oracle.query.StreamQuery;
 import it.polimi.deib.streams.oracle.repository.BenchmarkVocab;
 import it.polimi.deib.streams.oracle.result.OutputStreamResult;
@@ -10,7 +9,10 @@ import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
 import it.polimi.deib.streams.oracle.s2r.WindowScope;
 import it.polimi.deib.streams.oracle.s2r.Windower;
 
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,23 +139,51 @@ public class Oracle {
 				"}";
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		Oracle oracle = new Oracle();
 	
+		boolean detailedResults=false;
+		
+//		Writer out = new BufferedWriter(new FileWriter("output-"+System.currentTimeMillis()+".html"));
+		Writer out = new BufferedWriter(new FileWriter("output.html"));
+		out.write("<html><head><title>Oracle Results</title><style type=\"text/css\"> table { border-collapse:collapse; } table,th, td { border: 1px solid black; } </style></head><body>");
+		
 		ReportPolicy policy = Config.getInstance().getPolicy();
 		for(String queryKey : Config.getInstance().getQuerySet()){
 			logger.info("Testing query {}", queryKey);
+			out.write("<h2>Query "+queryKey+"</h2>");
 			StreamQuery query = Config.getInstance().getQuery(queryKey);
-			
-			long actualT0 = query.getFirstT0();
-			for(;actualT0<1000;actualT0+=Config.getInstance().getTimeUnit()){
-				logger.debug("****** Window with t0={} *********",actualT0);
-				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 30000);
-				logger.info("Returned result: {}\n", sr);
-				if(query.getAnswer()!=null)
-					logger.info("The system answer matches: {}", sr.contains(query.getAnswer()));
+
+			if(detailedResults && query.getAnswer()!=null){
+				out.write("<h3>Result of the system</h3>");
+				out.write(query.getAnswer().toString().replaceAll("<", "&lt;").replaceAll("]", "]<br/>"));
 			}
+
+
+			out.write("<h3>Oracle results</h3><table><tr><th>Execution number</th><th>t0</th>"+(detailedResults?"<th>Result</th>":"")+"<th>Matches</th></tr>");
+			long actualT0 = query.getFirstT0();
+			long lastT0 = query.getFirstT0()+query.getWindowDefinition().getSize();
+			long lastTimestamp = Config.getInstance().getInputStreamMaxTime()*Config.getInstance().getInputStreamInterval()+query.getWindowDefinition().getSize();
+			logger.info("t0 will vary between {} and {}; the last timestamp will be: {}", new Object[]{actualT0, lastT0, lastTimestamp});
+			for(int i=1; actualT0<=lastT0;actualT0+=Config.getInstance().getTimeUnit()){
+				logger.info("Execution {}: Window with t0={}", i, actualT0);
+				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, lastTimestamp);
+				logger.info("Returned result: {}\n", sr);
+				out.write("<tr><td>"+i+"</td><td>"+
+						actualT0+"</td>" +
+						(detailedResults?"<td>"+sr.toString().replaceAll("<", "&lt;").replaceAll("]", "]<br/>")+"</td>":""));
+				if(query.getAnswer()!=null){
+					boolean match = sr.contains(query.getAnswer());
+					logger.info("The system answer matches: {}", sr.contains(query.getAnswer()));
+					out.write("<td>"+match+"</td></tr>");
+				} else
+					out.write("<td>N/A</td></tr>");
+				i++;
+			}
+			out.write("</table>");
 		}
+		out.write("</body></html>");
+		out.close();
 		
 	}
 	

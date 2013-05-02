@@ -84,7 +84,6 @@ public class JsonConverter {
 							JsonNode value = element.get("binding").get(var);
 							if(value.get("type").asText().equals("uri")){
 								URI uri = vf.createURI(value.get("value").asText()); 
-								logger.debug("Adding {}={}", var, uri);
 								tre.add(var, uri);
 							} else if(value.get("type").asText().equals("literal")){
 								Literal literal;
@@ -92,7 +91,6 @@ public class JsonConverter {
 									literal = vf.createLiteral(value.get("xml:lang").asText());
 								else
 									literal = vf.createLiteral(value.get("value").asText());
-								logger.debug("Adding {}={}", var, literal);
 								tre.add(var, literal);
 							} else throw new RuntimeException("not a uri or literal");
 						}

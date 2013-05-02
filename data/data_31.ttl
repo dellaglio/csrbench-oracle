@@ -1,0 +1,425 @@
+@prefix om-owl:  <http://knoesis.wright.edu/ssw/ont/sensor-observation.owl#> .
+@prefix sens-obs:  <http://knoesis.wright.edu/ssw/> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix weather:  <http://knoesis.wright.edu/ssw/ont/weather.owl#> .
+
+sens-obs:MeasureData_RelativeHumidity_C0958_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "58"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:Observation_AirTemperature_C0692_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C0692 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C0692_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C0757_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C0757 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C0757_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C0655_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C0655 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C0655_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_RelativeHumidity_C1390_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "79"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:Observation_AirTemperature_C1251_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1251 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1251_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_RelativeHumidity_C1293_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1293 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1293_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_AirTemperature_C1293_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "60"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_RelativeHumidity_C1251_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "65"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:MeasureData_RelativeHumidity_C0655_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "83"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:Observation_RelativeHumidity_C1334_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1334 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1334_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C0958_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C0958 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C0958_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_RelativeHumidity_C0958_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C0958 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C0958_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C1341_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1341 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1341_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_AirTemperature_C1032_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "57"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_RelativeHumidity_C1415_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "28"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:Observation_RelativeHumidity_C0694_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C0694 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C0694_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_RelativeHumidity_C0655_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C0655 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C0655_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_AirTemperature_C0694_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "78"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_AirTemperature_C0692_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "58"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_AirTemperature_C1415_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "68"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:Observation_RelativeHumidity_C1032_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1032 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1032_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_RelativeHumidity_C0694_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "58"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:MeasureData_AirTemperature_C1251_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "71"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:Observation_RelativeHumidity_C1415_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1415 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1415_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_RelativeHumidity_C1414_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "89"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:Observation_RelativeHumidity_C1064_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1064 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1064_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C1390_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1390 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1390_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_AirTemperature_C1414_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "56"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_RelativeHumidity_C1064_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "86"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:MeasureData_AirTemperature_C1321_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "60"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_AirTemperature_C1341_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "52"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_RelativeHumidity_C0692_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "56"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:MeasureData_AirTemperature_C0958_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "80"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_RelativeHumidity_C1321_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "90"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:Observation_AirTemperature_C1321_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1321 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1321_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_AirTemperature_C0757_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "59"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_AirTemperature_C0655_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "54"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:MeasureData_RelativeHumidity_C1341_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "94"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:Observation_RelativeHumidity_C0757_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C0757 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C0757_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C1293_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1293 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1293_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_RelativeHumidity_C0725_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C0725 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C0725_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_RelativeHumidity_C1390_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1390 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1390_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_RelativeHumidity_C1321_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1321 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1321_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_RelativeHumidity_C1341_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1341 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1341_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_RelativeHumidity_C1032_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "83"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:MeasureData_RelativeHumidity_C1334_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "79"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:Observation_RelativeHumidity_C1414_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1414 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1414_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C1064_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1064 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1064_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_RelativeHumidity_C1293_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "66"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:MeasureData_AirTemperature_C1334_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "55"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:Instant_2004_08_08_08_40_00
+      a       <http://www.w3.org/2006/time#Instant> ;
+      <http://www.w3.org/2006/time#inXSDDateTime>
+              "2004-08-08T08:40:00" .
+
+sens-obs:Observation_RelativeHumidity_C1251_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C1251 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C1251_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_AirTemperature_C1390_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "59"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:Observation_RelativeHumidity_C0692_2004_08_08_08_40_00
+      a       weather:RelativeHumidityObservation ;
+      om-owl:observedProperty
+              weather:_RelativeHumidity ;
+      om-owl:procedure sens-obs:System_C0692 ;
+      om-owl:result sens-obs:MeasureData_RelativeHumidity_C0692_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C1415_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1415 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1415_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_AirTemperature_C0725_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "74"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
+
+sens-obs:Observation_AirTemperature_C0694_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C0694 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C0694_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C1032_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1032 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1032_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C0725_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C0725 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C0725_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C1414_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1414 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1414_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:Observation_AirTemperature_C1334_2004_08_08_08_40_00
+      a       weather:TemperatureObservation ;
+      om-owl:observedProperty
+              weather:_AirTemperature ;
+      om-owl:procedure sens-obs:System_C1334 ;
+      om-owl:result sens-obs:MeasureData_AirTemperature_C1334_2004_08_08_08_40_00 ;
+      om-owl:samplingTime sens-obs:Instant_2004_08_08_08_40_00 .
+
+sens-obs:MeasureData_RelativeHumidity_C0725_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "86"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:MeasureData_RelativeHumidity_C0757_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "89"^^xsd:double ;
+      om-owl:uom weather:percentage .
+
+sens-obs:MeasureData_AirTemperature_C1064_2004_08_08_08_40_00
+      a       om-owl:MeasureData ;
+      om-owl:floatValue "53"^^xsd:double ;
+      om-owl:uom weather:fahrenheit .
