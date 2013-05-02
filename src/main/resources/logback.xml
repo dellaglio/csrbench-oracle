@@ -12,8 +12,7 @@
 		<appender-ref ref="STDOUT" />
 	</root>
 	
-	<logger name="org.openrdf" level="INFO">
-		<appender-ref ref="STDOUT" />
-	</logger>
-
+	<logger name="org.openrdf" level="INFO"></logger>
+	<logger name="it.polimi.deib.streams.oracle.Oracle" level="INFO"></logger>
+	<logger name="it.polimi.deib.streams.oracle.result.OutputStreamResult" level="INFO"></logger>
 </configuration>

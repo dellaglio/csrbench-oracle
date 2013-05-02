@@ -1,6 +1,5 @@
 package it.polimi.deib.streams.oracle;
 
-import it.polimi.deib.streams.oracle.io.JsonConverter;
 import it.polimi.deib.streams.oracle.query.StreamQuery;
 import it.polimi.deib.streams.oracle.repository.BenchmarkVocab;
 import it.polimi.deib.streams.oracle.result.OutputStreamResult;
@@ -10,7 +9,6 @@ import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
 import it.polimi.deib.streams.oracle.s2r.WindowScope;
 import it.polimi.deib.streams.oracle.s2r.Windower;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,9 +144,12 @@ public class Oracle {
 			StreamQuery query = Config.getInstance().getQuery(queryKey);
 			
 			long actualT0 = query.getFirstT0();
-			for(;actualT0<1000;actualT0+=Config.getInstance().getTimeUnit()){
-				logger.debug("****** Window with t0={} *********",actualT0);
-				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 30000);
+			long lastT0 = query.getFirstT0()+query.getWindowDefinition().getSize();
+			long lastTimestamp = Config.getInstance().getInputStreamMaxTime()*Config.getInstance().getInputStreamInterval()+query.getWindowDefinition().getSize();
+			logger.info("t0 will vary between {} and {}; the last timestamp will be: {}", new Object[]{actualT0, lastT0, lastTimestamp});
+			for(int i=1; actualT0<lastT0;actualT0+=Config.getInstance().getTimeUnit()){
+				logger.info("Execution {}: Window with t0={}", i++, actualT0);
+				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, lastTimestamp);
 				logger.info("Returned result: {}\n", sr);
 				if(query.getAnswer()!=null)
 					logger.info("The system answer matches: {}", sr.contains(query.getAnswer()));
