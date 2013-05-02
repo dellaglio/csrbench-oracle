@@ -41,10 +41,17 @@ public class JSonConverterTest {
 		assertEquals(result, oracleResult);
 	}
 	
-	@Test public void shouldDecodeResultsinFile(){
-        JsonConverter converter = new JsonConverter();				
+	@Test public void shouldDecodeResultsInFile(){
+		JsonConverter converter = new JsonConverter();				
+
+		String s = "{\"results\":[{\"head\":{\"vars\":[\"sensor\",\"value\",\"obs\"]},\"timestamp\":13500,\"results\":{\"bindings\":[{\"timestamp\":13500,\"binding\":{\"sensor\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/System_C1192\"},\"value\":{\"type\":\"literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#string\",\"value\":\"83.0\"},\"obs\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/Observation_AirTemperature_C1192_2004_08_08_07_05_00\"}}}]}},{\"head\":{\"vars\":[\"sensor\",\"value\",\"obs\"]},\"timestamp\":15500,\"results\":{\"bindings\":[{\"timestamp\":15500,\"binding\":{\"sensor\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/System_C0837\"},\"value\":{\"type\":\"literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#string\",\"value\":\"97.0\"},\"obs\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/Observation_AirTemperature_C0837_2004_08_08_07_15_00\"}}}]}},{\"head\":{\"vars\":[\"sensor\",\"value\",\"obs\"]},\"timestamp\":16500,\"results\":{\"bindings\":[{\"timestamp\":16500,\"binding\":{\"sensor\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/System_C1192\"},\"value\":{\"type\":\"literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#string\",\"value\":\"83.0\"},\"obs\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/Observation_AirTemperature_C1192_2004_08_08_07_20_00\"}}}]}},{\"head\":{\"vars\":[\"sensor\",\"value\",\"obs\"]},\"timestamp\":18500,\"results\":{\"bindings\":[{\"timestamp\":18500,\"binding\":{\"sensor\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/System_C0837\"},\"value\":{\"type\":\"literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#string\",\"value\":\"97.0\"},\"obs\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/Observation_AirTemperature_C0837_2004_08_08_07_30_00\"}}}]}},{\"head\":{\"vars\":[\"sensor\",\"value\",\"obs\"]},\"timestamp\":19500,\"results\":{\"bindings\":[{\"timestamp\":19500,\"binding\":{\"sensor\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/System_C1192\"},\"value\":{\"type\":\"literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#string\",\"value\":\"83.0\"},\"obs\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/Observation_AirTemperature_C1192_2004_08_08_07_35_00\"}}}]}},{\"head\":{\"vars\":[\"sensor\",\"value\",\"obs\"]},\"timestamp\":21500,\"results\":{\"bindings\":[{\"timestamp\":21500,\"binding\":{\"sensor\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/System_C0837\"},\"value\":{\"type\":\"literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#string\",\"value\":\"97.0\"},\"obs\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/Observation_AirTemperature_C0837_2004_08_08_07_45_00\"}}}]}},{\"head\":{\"vars\":[\"sensor\",\"value\",\"obs\"]},\"timestamp\":22500,\"results\":{\"bindings\":[{\"timestamp\":22500,\"binding\":{\"sensor\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/System_C1192\"},\"value\":{\"type\":\"literal\",\"datatype\":\"http://www.w3.org/2001/XMLSchema#string\",\"value\":\"83.0\"},\"obs\":{\"type\":\"uri\",\"value\":\"http://knoesis.wright.edu/ssw/Observation_AirTemperature_C1192_2004_08_08_07_50_00\"}}}]}}]}";
+		InputStream is = new ByteArrayInputStream(s.getBytes());
+		OutputStreamResult expectedResult = converter.decodeJson(is);
+
 		OutputStreamResult result = converter.decodeJson(
 				getClass().getClassLoader().getResourceAsStream("testresult.json"));
+		
+		assertEquals(expectedResult, result);
 		
 	}
 }

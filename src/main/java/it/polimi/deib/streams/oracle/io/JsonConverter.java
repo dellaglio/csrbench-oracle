@@ -67,27 +67,34 @@ public class JsonConverter {
 
 					Iterator<JsonNode> bit = results.iterator();
 					ValueFactory vf = new ValueFactoryImpl();
+					if(!bit.hasNext()){
+						long timestamp = n.get("timestamp").asLong();
+						TimestampedRelationElement tre = null;
+						tre = TimestampedRelationElement.createEmptyTimestampedRelationElement(timestamp);
+						tr.addElement(tre);
+					}
 					while(bit.hasNext()){
-						TimestampedRelationElement tre = new TimestampedRelationElement();
+						TimestampedRelationElement tre = null;
+						tre = new TimestampedRelationElement();
 
 						JsonNode element = bit.next();
-						tre.setTimestamp(element.get("timestamp").asLong());
+						long timestamp = element.get("timestamp").asLong();
+						tre.setTimestamp(timestamp);
 						for(String var : vars){
 							JsonNode value = element.get("binding").get(var);
 							if(value.get("type").asText().equals("uri")){
 								URI uri = vf.createURI(value.get("value").asText()); 
-										//new URIImpl(value.get("value").asText());
+								logger.debug("Adding {}={}", var, uri);
 								tre.add(var, uri);
-							}
-							else if(value.get("type").asText().equals("literal")){
+							} else if(value.get("type").asText().equals("literal")){
 								Literal literal;
 								if(value.get("xml:lang")!=null)
 									literal = vf.createLiteral(value.get("xml:lang").asText());
 								else
 									literal = vf.createLiteral(value.get("value").asText());
+								logger.debug("Adding {}={}", var, literal);
 								tre.add(var, literal);
-							}
-							else throw new RuntimeException("not a uri or literal");
+							} else throw new RuntimeException("not a uri or literal");
 						}
 						tr.addElement(tre);
 					}
@@ -99,7 +106,7 @@ public class JsonConverter {
 		mapper.registerModule(oracleModule);
 	}
 	
-	OutputStreamResult decodeJson(InputStream is){
+	public OutputStreamResult decodeJson(InputStream is){
 		try {
 			OutputStreamResult osr;
 			osr = mapper.readValue(is, OutputStreamResult.class);

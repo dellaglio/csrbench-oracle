@@ -142,17 +142,16 @@ public class Oracle {
 	
 		ReportPolicy policy = Config.getInstance().getPolicy();
 		for(String queryKey : Config.getInstance().getQuerySet()){
+			logger.info("Testing query {}", queryKey);
 			StreamQuery query = Config.getInstance().getQuery(queryKey);
 			
 			long actualT0 = query.getFirstT0();
-			for(;actualT0<10000;actualT0+=Config.getInstance().getTimeUnit()){
+			for(;actualT0<1000;actualT0+=Config.getInstance().getTimeUnit()){
 				logger.debug("****** Window with t0={} *********",actualT0);
 				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, 30000);
-				logger.debug("Returned result: {}\n", sr);
-				JsonConverter converter = new JsonConverter();
-				ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				converter.encodeJson(baos, sr);
-				System.out.println(baos.toString());
+				logger.info("Returned result: {}\n", sr);
+				if(query.getAnswer()!=null)
+					logger.info("The system answer matches: {}", sr.contains(query.getAnswer()));
 			}
 		}
 		
