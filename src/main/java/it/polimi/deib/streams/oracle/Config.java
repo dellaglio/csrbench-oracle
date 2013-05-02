@@ -6,7 +6,6 @@ import it.polimi.deib.streams.oracle.query.WindowDefinition;
 import it.polimi.deib.streams.oracle.result.OutputStreamResult;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.InputStream;
 import java.util.HashSet;
