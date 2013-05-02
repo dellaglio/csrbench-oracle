@@ -146,7 +146,7 @@ public class Oracle {
 		
 //		Writer out = new BufferedWriter(new FileWriter("output-"+System.currentTimeMillis()+".html"));
 		Writer out = new BufferedWriter(new FileWriter("output.html"));
-		out.write("<html><head><title>Oracle Results</title></head><body>");
+		out.write("<html><head><title>Oracle Results</title><style type=\"text/css\"> table { border-collapse:collapse; } table,th, td { border: 1px solid black; } </style></head><body>");
 		
 		ReportPolicy policy = Config.getInstance().getPolicy();
 		for(String queryKey : Config.getInstance().getQuerySet()){
@@ -160,7 +160,7 @@ public class Oracle {
 			}
 
 
-			out.write("<h3>Oracle results</h3><table><thead><tr><td>Execution number</td><td>t0</td>"+(detailedResults?"<td>Result</td>":"")+"<td>Matches</td></tr></thead><tbody>");
+			out.write("<h3>Oracle results</h3><table><tr><th>Execution number</th><th>t0</th>"+(detailedResults?"<th>Result</th>":"")+"<th>Matches</th></tr>");
 			long actualT0 = query.getFirstT0();
 			long lastT0 = query.getFirstT0()+query.getWindowDefinition().getSize();
 			long lastTimestamp = Config.getInstance().getInputStreamMaxTime()*Config.getInstance().getInputStreamInterval()+query.getWindowDefinition().getSize();
@@ -170,9 +170,8 @@ public class Oracle {
 				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, lastTimestamp);
 				logger.info("Returned result: {}\n", sr);
 				out.write("<tr><td>"+i+"</td><td>"+
-						actualT0+"</td><td>"+
-						(detailedResults?(sr.toString().replaceAll("<", "&lt;").replaceAll("]", "]<br/>")):"")+
-						"</td>");
+						actualT0+"</td>" +
+						(detailedResults?"<td>"+sr.toString().replaceAll("<", "&lt;").replaceAll("]", "]<br/>")+"</td>":""));
 				if(query.getAnswer()!=null){
 					boolean match = sr.contains(query.getAnswer());
 					logger.info("The system answer matches: {}", sr.contains(query.getAnswer()));
@@ -181,7 +180,7 @@ public class Oracle {
 					out.write("<td>N/A</td></tr>");
 				i++;
 			}
-			out.write("</tbody></table>");
+			out.write("</table>");
 		}
 		out.write("</body></html>");
 		out.close();
