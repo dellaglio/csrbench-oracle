@@ -37,7 +37,7 @@ public class Config {
 	}
 	
 	public File getRepoDir(){
-		String dir = config.getString("importdata.repo.datadir");
+		String dir = config.getString("importer.repo.datadir");
 		File ret = new File(dir);
 		return ret;
 	}
@@ -71,15 +71,15 @@ public class Config {
 	}
 	
 	public Integer getInputStreamMaxTime(){
-		return config.getInt("importdata.maxtime");
+		return config.getInt("importer.data.maxtime");
 	}
 	
 	public Long getInputStreamInterval(){
-		return config.getLong("importdata.interval");
+		return config.getLong("importer.data.interval");
 	}
 	
 	public Set<String> getInputStreamHoles(){
-		List<Object> holes = config.getList("importdata.exclude");
+		List<Object> holes = config.getList("importer.data.exclude");
 		Set<String> ret = new HashSet<String>(holes.size());
 		for(Object hole : holes)
 			ret.add(hole.toString());
