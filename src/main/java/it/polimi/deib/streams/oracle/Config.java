@@ -1,10 +1,14 @@
 package it.polimi.deib.streams.oracle;
 
+import it.polimi.deib.streams.oracle.io.JsonConverter;
 import it.polimi.deib.streams.oracle.query.StreamQuery;
 import it.polimi.deib.streams.oracle.query.WindowDefinition;
+import it.polimi.deib.streams.oracle.result.OutputStreamResult;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -20,8 +24,11 @@ public class Config {
 	private static final Logger logger = LoggerFactory.getLogger(Config.class); 
 	
 	private Configuration config;
+	private JsonConverter converter;				
+
 	
 	private Config(){
+		converter = new JsonConverter();
 		try {
 			config = new PropertiesConfiguration("setup.properties");
 		} catch (ConfigurationException e) {
@@ -30,7 +37,7 @@ public class Config {
 	}
 	
 	public File getRepoDir(){
-		String dir = config.getString("repo.datadir");
+		String dir = config.getString("importdata.repo.datadir");
 		File ret = new File(dir);
 		return ret;
 	}
@@ -40,6 +47,18 @@ public class Config {
 		ret.setBooleanQuery(config.getString(key+".booleanquery"));
 		ret.setWindowDefinition(new WindowDefinition(config.getLong(key+".window.size"), config.getLong(key+".window.slide")));
 		ret.setFirstT0(config.getLong(key+".window.firstt0"));
+
+		String answer = config.getString(key+".answer");
+		if(answer!=null){
+			InputStream is = getClass().getClassLoader().getResourceAsStream(answer);
+			System.out.println("---> "+answer + " "+is);
+			OutputStreamResult result = converter.decodeJson(is);
+
+//			InputStream is = new ByteArrayInputStream(answer.getBytes());
+//			OutputStreamResult a = converter.decodeJson(is);
+			ret.setAnswer(result);
+		}
+
 		return ret;
 	}
 	
