@@ -1,18 +1,13 @@
 package it.polimi.deib.streams.oracle.repository;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import it.polimi.deib.streams.oracle.Config;
 
-import org.apache.commons.configuration.Configuration;
-import org.apache.commons.configuration.ConfigurationException;
-import org.apache.commons.configuration.PropertiesConfiguration;
-import org.openrdf.model.Graph;
+import java.io.File;
+import java.io.IOException;
+import java.util.Set;
+
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.NumericLiteralImpl;
-import org.openrdf.model.impl.TreeModel;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.MalformedQueryException;
 import org.openrdf.query.QueryEvaluationException;
@@ -22,31 +17,20 @@ import org.openrdf.query.TupleQueryResult;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.rio.RDFFormat;
-import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFParseException;
-import org.openrdf.rio.RDFParser;
-import org.openrdf.rio.Rio;
-import org.openrdf.rio.helpers.StatementCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class SRBenchImporter extends StreamImporter{
 	private final static Logger logger = LoggerFactory.getLogger(SRBenchImporter.class);
-	private Configuration conf=null;
 	private int max=0;
 	private long interval=0;
-	private List exclude=null;
+	private Set<String> exclude=null;
 	
 	public SRBenchImporter(){
-		try {
-			conf = new PropertiesConfiguration("setup.properties");
-		} catch (ConfigurationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		max=conf.getInt("importdata.maxtime");
-		interval=conf.getLong("importdata.interval");
-		exclude=conf.getList("importdata.exclude");
+		max=Config.getInstance().getInputStreamMaxTime();
+		interval=Config.getInstance().getInputStreamInterval();
+		exclude=Config.getInstance().getInputStreamHoles();
 	}
 	
 	public void addTimestampedData(File f, long timestamp) throws RDFParseException, IOException, RepositoryException{

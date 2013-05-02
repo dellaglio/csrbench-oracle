@@ -5,6 +5,9 @@ import it.polimi.deib.streams.oracle.query.WindowDefinition;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
 
 import java.io.File;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.configuration.ConfigurationException;
@@ -48,6 +51,22 @@ public class Config {
 		return config.getLong("system.timeunit");
 	}
 	
+	public Integer getInputStreamMaxTime(){
+		return config.getInt("importdata.maxtime");
+	}
+	
+	public Long getInputStreamInterval(){
+		return config.getLong("importdata.interval");
+	}
+	
+	public Set<String> getInputStreamHoles(){
+		List<Object> holes = config.getList("importdata.exclude");
+		Set<String> ret = new HashSet<String>(holes.size());
+		for(Object hole : holes)
+			ret.add(hole.toString());
+		return ret;
+	}
+
 	public ReportPolicy getPolicy(){
 		ReportPolicy ret = new ReportPolicy();
 		ret.setWindowClose(config.getBoolean("system.policy.windowclose"));
