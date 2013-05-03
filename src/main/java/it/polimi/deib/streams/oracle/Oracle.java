@@ -174,7 +174,7 @@ public class Oracle {
 						(detailedResults?"<td>"+sr.toString().replaceAll("<", "&lt;").replaceAll("]", "]<br/>")+"</td>":""));
 				if(query.getAnswer()!=null){
 					boolean match = sr.contains(query.getAnswer());
-					logger.info("The system answer matches: {}", sr.contains(query.getAnswer()));
+					logger.info("The system answer matches: {}", match);
 					out.write("<td>"+match+"</td></tr>");
 				} else
 					out.write("<td>N/A</td></tr>");

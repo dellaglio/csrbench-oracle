@@ -44,8 +44,7 @@ public class SRBenchImporter extends StreamImporter{
 	}
 	
 	public void importData(int time) throws RDFParseException, IOException, RepositoryException{
-		String timed=(time < 10)?"0"+time:""+time;
-		addTimestampedData(new File("data/data_"+timed+".ttl"), time*interval);
+		addTimestampedData(new File("data/data_"+(time < 10 ? "0" + time : time)+".ttl"), time*interval);
 	}
 	
 	public void importAllData() throws RDFParseException, RepositoryException, IOException{

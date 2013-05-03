@@ -63,27 +63,6 @@ public class TimestampedRelation {
 		return ret.toString();
 	}
 
-	
-//	@Override
-//	public boolean equals2(Object obj) {
-//		if(!(obj instanceof TimestampedRelation))
-//			return false;
-//		System.out.println("a");
-//		for(TimestampedRelationElement elem : results)
-//			System.out.println(elem);
-//		for(TimestampedRelationElement tre : ((TimestampedRelation)obj).getElements()){
-//			System.out.println(tre);
-//			if(!results.contains(tre))
-//				return false;
-//		}
-//		System.out.println("b");
-//		for(TimestampedRelationElement tre : results)
-//			if(!((TimestampedRelation)obj).getElements().contains(tre))
-//				return false;
-//		System.out.println("c");
-//		return true;
-//	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
