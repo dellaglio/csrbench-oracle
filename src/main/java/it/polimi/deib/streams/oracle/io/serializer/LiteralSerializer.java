@@ -18,12 +18,9 @@ public class LiteralSerializer extends SerializerBase<Literal> {
 	public void serialize(Literal literal, JsonGenerator jGen, SerializerProvider sPro)
 			throws IOException, JsonProcessingException {
 		jGen.writeStartObject();
-	    if(literal.getDatatype()!=null){
-	    	jGen.writeStringField("type", "typed-literal");
+    	jGen.writeStringField("type", "literal");
+	    if(literal.getDatatype()!=null)
 		    jGen.writeStringField("datatype", literal.getDatatype().toString());
-	    } else{
-	    	jGen.writeStringField("type", "literal");
-	    }
 	    if(literal.getLanguage()!=null){
 	    	jGen.writeStringField("xml:lang", literal.getLanguage());
 	    }
