@@ -92,6 +92,10 @@ public class JsonConverter {
 								else
 									literal = vf.createLiteral(value.get("value").asText());
 								tre.add(var, literal);
+							} else if(value.get("type").asText().equals("typed-literal")){
+								Literal literal;
+								literal = vf.createLiteral(value.get("value").asText(), vf.createURI(value.get("datatype").asText()));
+								tre.add(var, literal);							
 							} else throw new RuntimeException("not a uri or literal");
 						}
 						tr.addElement(tre);

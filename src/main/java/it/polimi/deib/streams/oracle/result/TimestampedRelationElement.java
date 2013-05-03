@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.openrdf.model.Literal;
-import org.openrdf.model.vocabulary.XMLSchema;
 
 public class TimestampedRelationElement{
 	private Map<String, Object> outputTuple;
@@ -41,32 +40,13 @@ public class TimestampedRelationElement{
 		this.tupleTimestamp = timestamp;
 	}
 
-//	@Override
-//	public boolean equals2(Object obj) {
-//		System.out.println("aaa");
-//		if(obj instanceof TimestampedRelationElement){
-//			Map<String, Object> binding = getBinding();
-//			System.out.println(outputTuple.size() + " " + binding.size());
-//			if(outputTuple.size()!=binding.size())
-//				return false;
-//			for(String key : outputTuple.keySet()){
-//				System.out.println(outputTuple.get(key).toString() + " " + binding.get(key).toString());
-//				if(!outputTuple.get(key).toString().equals(binding.get(key).toString()))
-//					return false;
-//			}
-//			return true;
-//		}
-//		return false;
-//	}
-	
-	
-
 	@Override
 	public int hashCode() {
-		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((outputTuple == null) ? 0 : outputTuple.hashCode());
+		final int prime = 31;
+		if(numericKeys.size()==0)
+			result = prime * result
+					+ ((outputTuple == null) ? 0 : outputTuple.hashCode());
 		return result;
 	}
 
@@ -83,11 +63,14 @@ public class TimestampedRelationElement{
 			if (other.outputTuple != null)
 				return false;
 		} else if (!outputTuple.equals(other.outputTuple)){
-			for(String key : numericKeys){
-				Literal l1 = (Literal)outputTuple.get(key);
-				Literal l2 = (Literal)other.outputTuple.get(key);
-				if(l1.doubleValue()!=l2.doubleValue())
-					return false;
+			if(numericKeys.size()>0){
+				for(String key : numericKeys){
+					Literal l1 = (Literal)outputTuple.get(key);
+					Literal l2 = (Literal)other.outputTuple.get(key);
+					if(l1.doubleValue()!=l2.doubleValue())
+						return false;
+				}
+				return true;
 			}
 			return false;
 		}
