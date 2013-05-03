@@ -1,18 +1,32 @@
 package it.polimi.deib.streams.oracle.result;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
+
+import org.openrdf.model.Literal;
+import org.openrdf.model.vocabulary.XMLSchema;
 
 public class TimestampedRelationElement{
 	private Map<String, Object> outputTuple;
+	private Set<String> numericKeys;
 	private long tupleTimestamp, outputRelationTimestamp;
 
 	public TimestampedRelationElement(){
 		outputTuple = new HashMap<String, Object>();
+		numericKeys = new HashSet<String>();
 	}
 
 	public void add(String key, Object value) {
 		outputTuple.put(key, value);
+		if(value instanceof Literal){
+			try{
+				((Literal) value).doubleValue(); 
+				numericKeys.add(key);
+			}
+			catch(Exception e){}
+		}
 	}
 
 	public Map<String,Object> getBinding() {
@@ -68,8 +82,15 @@ public class TimestampedRelationElement{
 		if (outputTuple == null) {
 			if (other.outputTuple != null)
 				return false;
-		} else if (!outputTuple.equals(other.outputTuple))
+		} else if (!outputTuple.equals(other.outputTuple)){
+			for(String key : numericKeys){
+				Literal l1 = (Literal)outputTuple.get(key);
+				Literal l2 = (Literal)other.outputTuple.get(key);
+				if(l1.doubleValue()!=l2.doubleValue())
+					return false;
+			}
 			return false;
+		}
 		return true;
 	}
 
