@@ -165,7 +165,8 @@ public class Oracle {
 			long lastT0 = query.getFirstT0()+query.getWindowDefinition().getSize();
 			long lastTimestamp = Config.getInstance().getInputStreamMaxTime()*Config.getInstance().getInputStreamInterval()+query.getWindowDefinition().getSize();
 			logger.info("t0 will vary between {} and {}; the last timestamp will be: {}", new Object[]{actualT0, lastT0, lastTimestamp});
-			for(int i=1; actualT0<=lastT0;actualT0+=Config.getInstance().getTimeUnit()){
+			boolean match = false;
+			for(int i=1; !match && actualT0<=lastT0;actualT0+=Config.getInstance().getTimeUnit()){
 				logger.info("Execution {}: Window with t0={}", i, actualT0);
 				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, lastTimestamp);
 				logger.info("Returned result: {}\n", sr);
@@ -173,7 +174,7 @@ public class Oracle {
 						actualT0+"</td>" +
 						(detailedResults?"<td>"+sr.toString().replaceAll("<", "&lt;").replaceAll("]", "]<br/>")+"</td>":""));
 				if(query.getAnswer()!=null){
-					boolean match = sr.contains(query.getAnswer());
+					match = sr.contains(query.getAnswer());
 					logger.info("The system answer matches: {}", match);
 					out.write("<td>"+match+"</td></tr>");
 				} else
