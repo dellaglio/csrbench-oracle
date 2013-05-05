@@ -17,7 +17,7 @@ public class JSonConverterTest {
 	private static final Logger logger = LoggerFactory.getLogger(JSonConverterTest.class);
 
 	@Test public void shouldEncodeResults(){
-		OutputStreamResult oracleResult = new OutputStreamResult();
+		OutputStreamResult oracleResult = new OutputStreamResult(true);
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		JsonConverter converter = new JsonConverter();
@@ -34,7 +34,7 @@ public class JSonConverterTest {
 		InputStream is = new ByteArrayInputStream(s.getBytes());
 		OutputStreamResult result = converter.decodeJson(is);
 		
-		OutputStreamResult oracleResult = new OutputStreamResult();
+		OutputStreamResult oracleResult = new OutputStreamResult(false);
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 

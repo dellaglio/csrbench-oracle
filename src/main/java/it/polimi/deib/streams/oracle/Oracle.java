@@ -46,7 +46,7 @@ public class Oracle {
 	}
 
 	protected OutputStreamResult executeStreamQuery(StreamQuery query, long t0, ReportPolicy policy, long lastTimestamp){
-		OutputStreamResult ret = new OutputStreamResult();
+		OutputStreamResult ret = new OutputStreamResult(Config.getInstance().getEmtpyRelationOutput());
 		Windower windower = new Windower(query.getWindowDefinition(), policy, t0);
 
 		try{

@@ -11,18 +11,21 @@ public class OutputStreamResult {
 	
 	public enum S2ROperator {Istream, Rstream, Dstream};
 
-	List<TimestampedRelation> results;
-	S2ROperator operator;
-	TimestampedRelation previousRelation;
+	private List<TimestampedRelation> results;
+	private S2ROperator operator;
+	private TimestampedRelation previousRelation;
+	private boolean outputEmptyResult;
 
-	public OutputStreamResult() {
+	public OutputStreamResult(boolean outputEmptyRelation) {
 		results = new ArrayList<TimestampedRelation>();
 		this.operator=S2ROperator.Rstream;
+		this.outputEmptyResult=outputEmptyRelation;
 	}
 
-	public OutputStreamResult(S2ROperator operator) {
+	public OutputStreamResult(S2ROperator operator, boolean outputEmptyRelation) {
 		results = new ArrayList<TimestampedRelation>();
 		this.operator=operator;
+		this.outputEmptyResult=outputEmptyRelation;
 	}
 
 	public List<TimestampedRelationElement> getResultBindingLists() {

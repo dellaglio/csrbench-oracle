@@ -15,7 +15,7 @@ public class OutputStreamResultTest {
 	private OutputStreamResult processorResult;
 	
 	@Test public void aResultShouldContainItself(){
-		oracleResult = new OutputStreamResult();
+		oracleResult = new OutputStreamResult(false);
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation20.properties", logger));
@@ -24,12 +24,12 @@ public class OutputStreamResultTest {
 	}
 	
 	@Test public void aResultShouldContainItself2(){
-		oracleResult = new OutputStreamResult();
+		oracleResult = new OutputStreamResult(false);
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation20.properties", logger));
 		
-		processorResult = new OutputStreamResult();
+		processorResult = new OutputStreamResult(false);
 		processorResult .addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		processorResult .addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		processorResult .addRelation(Utility.importRelation("timestampedrelation20.properties", logger));
@@ -37,12 +37,12 @@ public class OutputStreamResultTest {
 	}
 	
 	@Test public void differentOrderShouldProduceFalse(){
-		oracleResult = new OutputStreamResult();
+		oracleResult = new OutputStreamResult(false);
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation20.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		
-		processorResult = new OutputStreamResult();
+		processorResult = new OutputStreamResult(false);
 		processorResult .addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		processorResult .addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		processorResult .addRelation(Utility.importRelation("timestampedrelation20.properties", logger));
@@ -50,24 +50,24 @@ public class OutputStreamResultTest {
 	}
 	
 	@Test public void subsequenceInTheHeadShouldProduceTrue(){
-		oracleResult = new OutputStreamResult();
+		oracleResult = new OutputStreamResult(false);
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation20.properties", logger));
 		
-		processorResult = new OutputStreamResult();
+		processorResult = new OutputStreamResult(false);
 		processorResult .addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		processorResult .addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		assertTrue(oracleResult.contains(processorResult));
 	}
 	
 	@Test public void subsequenceInTheTailShouldProduceTrue(){
-		oracleResult = new OutputStreamResult();
+		oracleResult = new OutputStreamResult(false);
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation18.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		oracleResult.addRelation(Utility.importRelation("timestampedrelation20.properties", logger));
 		
-		processorResult = new OutputStreamResult();
+		processorResult = new OutputStreamResult(false);
 		processorResult .addRelation(Utility.importRelation("timestampedrelation19.properties", logger));
 		processorResult .addRelation(Utility.importRelation("timestampedrelation20.properties", logger));
 		assertTrue(oracleResult.contains(processorResult));

@@ -89,6 +89,10 @@ public class Config {
 		return ret;
 	}
 	
+	public boolean getEmtpyRelationOutput(){
+		return config.getBoolean("system.output.emptyrelation");
+	}
+	
 	public static Config getInstance(){
 		if(_instance==null)
 			_instance=new Config();

@@ -1,5 +1,6 @@
 package it.polimi.deib.streams.oracle.io;
 
+import it.polimi.deib.streams.oracle.Config;
 import it.polimi.deib.streams.oracle.io.serializer.LiteralSerializer;
 import it.polimi.deib.streams.oracle.io.serializer.OutputStreamResultSerializer;
 import it.polimi.deib.streams.oracle.io.serializer.TimestampedRelationElementSerializer;
@@ -48,7 +49,7 @@ public class JsonConverter {
 			public OutputStreamResult deserialize(JsonParser jp, DeserializationContext ctxt)
 					throws IOException, JsonProcessingException {
 
-				OutputStreamResult ret = new OutputStreamResult();
+				OutputStreamResult ret = new OutputStreamResult(Config.getInstance().getEmtpyRelationOutput());
 				
 				jp.nextValue();
 
