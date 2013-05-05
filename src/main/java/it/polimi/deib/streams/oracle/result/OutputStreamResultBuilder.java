@@ -18,10 +18,13 @@ public class OutputStreamResultBuilder {
 
 	public void addRelation(TimestampedRelation relation){
 		if(operator.equals(S2ROperator.Rstream)){
-			if(relation.getBindings().size()==0 && outputEmptyRelation){
-				relation.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
+			if(relation.getBindings().size()==0){
+				if(outputEmptyRelation){
+					relation.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
+					output.addRelation(relation);
+				}
+			} else
 				output.addRelation(relation);
-			}
 		} else if(operator.equals(S2ROperator.Istream)){
 			if(previousRelation==null){
 				if(relation.getBindings().size()==0){
