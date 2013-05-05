@@ -9,63 +9,26 @@ import org.slf4j.LoggerFactory;
 public class OutputStreamResult {
 	private static final Logger logger = LoggerFactory.getLogger(OutputStreamResult.class);
 	
-	public enum S2ROperator {Istream, Rstream, Dstream};
-
 	private List<TimestampedRelation> results;
-	private S2ROperator operator;
-	private TimestampedRelation previousRelation;
-	private boolean outputEmptyResult;
 
-	public OutputStreamResult(boolean outputEmptyRelation) {
+	public OutputStreamResult() {
 		results = new ArrayList<TimestampedRelation>();
-		this.operator=S2ROperator.Rstream;
-		this.outputEmptyResult=outputEmptyRelation;
 	}
 
-	public OutputStreamResult(S2ROperator operator, boolean outputEmptyRelation) {
-		results = new ArrayList<TimestampedRelation>();
-		this.operator=operator;
-		this.outputEmptyResult=outputEmptyRelation;
-	}
-
-	public List<TimestampedRelationElement> getResultBindingLists() {
-		List<TimestampedRelationElement> ret = new ArrayList<TimestampedRelationElement>();
-		for(TimestampedRelation rel : results){
-			ret.addAll(rel.getBindings());
-		}
-		return ret;
-	}
+//	public List<TimestampedRelationElement> getResultBindingLists() {
+//		List<TimestampedRelationElement> ret = new ArrayList<TimestampedRelationElement>();
+//		for(TimestampedRelation rel : results){
+//			ret.addAll(rel.getBindings());
+//		}
+//		return ret;
+//	}
 
 	public List<TimestampedRelation> getResultRelations() {
 		return results;
 	}
 
 	public void addRelation(TimestampedRelation relation){
-		if(operator.equals(S2ROperator.Rstream)){
-			if(relation.getBindings().size()==0)
-				relation.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
-			results.add(relation);
-		} else if(operator.equals(S2ROperator.Istream)){
-			if(previousRelation==null){
-				if(relation.getBindings().size()==0)
-					relation.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
-				results.add(relation);
-			}
-			else{
-				TimestampedRelation diff = new TimestampedRelation(relation.minus(previousRelation), relation.getComputationTimestamp());
-				if(diff.getBindings().size()==0)
-					diff.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
-				results.add(diff);
-			}
-		} else { //Dstream
-			if(previousRelation!=null){
-				TimestampedRelation diff = new TimestampedRelation(previousRelation.minus(relation), relation.getComputationTimestamp());
-				if(diff.getBindings().size()==0)
-					diff.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
-				results.add(diff);
-			}
-		}
-		previousRelation=relation;
+		results.add(relation);
 	}
 
 	@Override
@@ -106,8 +69,7 @@ public class OutputStreamResult {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result
-				+ ((operator == null) ? 0 : operator.hashCode());
+		result = prime * result;
 		result = prime * result + ((results == null) ? 0 : results.hashCode());
 		return result;
 	}
@@ -121,8 +83,6 @@ public class OutputStreamResult {
 		if (getClass() != obj.getClass())
 			return false;
 		OutputStreamResult other = (OutputStreamResult) obj;
-		if (operator != other.operator)
-			return false;
 		if (results == null) {
 			if (other.results != null)
 				return false;

@@ -3,6 +3,8 @@ package it.polimi.deib.streams.oracle;
 import it.polimi.deib.streams.oracle.query.StreamQuery;
 import it.polimi.deib.streams.oracle.repository.BenchmarkVocab;
 import it.polimi.deib.streams.oracle.result.OutputStreamResult;
+import it.polimi.deib.streams.oracle.result.OutputStreamResultBuilder;
+import it.polimi.deib.streams.oracle.result.OutputStreamResultBuilder.S2ROperator;
 import it.polimi.deib.streams.oracle.result.TimestampedRelation;
 import it.polimi.deib.streams.oracle.result.TimestampedRelationElement;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
@@ -46,7 +48,7 @@ public class Oracle {
 	}
 
 	protected OutputStreamResult executeStreamQuery(StreamQuery query, long t0, ReportPolicy policy, long lastTimestamp){
-		OutputStreamResult ret = new OutputStreamResult(Config.getInstance().getEmtpyRelationOutput());
+		OutputStreamResultBuilder ret = new OutputStreamResultBuilder(S2ROperator.Rstream, Config.getInstance().getEmtpyRelationOutput());
 		Windower windower = new Windower(query.getWindowDefinition(), policy, t0);
 
 		try{
@@ -62,13 +64,14 @@ public class Oracle {
 			} else {
 				logger.debug("The content is empty and the non-empty content report policy is {}", policy.isNonEmptyContent());
 				if(!policy.isNonEmptyContent()){
-					ret.addRelation(TimestampedRelation.createEmptyRelation(tr.getTo()));
+					if(Config.getInstance().getEmtpyRelationOutput())
+						ret.addRelation(TimestampedRelation.createEmptyRelation(tr.getTo()));
 				}
 			}
 			tr=windower.getNextWindowScope(conn);
 		}
 		}catch(RepositoryException e){logger.error("Error while retrieving the connection to the RDF store", e);}
-		return ret;
+		return ret.getOutputStreamResult();
 	}
 	
 	private TimestampedRelation executeStreamQueryOverABlock(String query, List<URI> graphsList, long computationTimestamp){
