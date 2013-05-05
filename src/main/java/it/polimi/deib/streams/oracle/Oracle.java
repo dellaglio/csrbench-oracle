@@ -3,6 +3,8 @@ package it.polimi.deib.streams.oracle;
 import it.polimi.deib.streams.oracle.query.StreamQuery;
 import it.polimi.deib.streams.oracle.repository.BenchmarkVocab;
 import it.polimi.deib.streams.oracle.result.OutputStreamResult;
+import it.polimi.deib.streams.oracle.result.OutputStreamResultBuilder;
+import it.polimi.deib.streams.oracle.result.OutputStreamResultBuilder.S2ROperator;
 import it.polimi.deib.streams.oracle.result.TimestampedRelation;
 import it.polimi.deib.streams.oracle.result.TimestampedRelationElement;
 import it.polimi.deib.streams.oracle.s2r.ReportPolicy;
@@ -46,7 +48,7 @@ public class Oracle {
 	}
 
 	protected OutputStreamResult executeStreamQuery(StreamQuery query, long t0, ReportPolicy policy, long lastTimestamp){
-		OutputStreamResult ret = new OutputStreamResult();
+		OutputStreamResultBuilder ret = new OutputStreamResultBuilder(S2ROperator.Rstream, Config.getInstance().getEmtpyRelationOutput());
 		Windower windower = new Windower(query.getWindowDefinition(), policy, t0);
 
 		try{
@@ -62,13 +64,14 @@ public class Oracle {
 			} else {
 				logger.debug("The content is empty and the non-empty content report policy is {}", policy.isNonEmptyContent());
 				if(!policy.isNonEmptyContent()){
-					ret.addRelation(TimestampedRelation.createEmptyRelation(tr.getTo()));
+					if(Config.getInstance().getEmtpyRelationOutput())
+						ret.addRelation(TimestampedRelation.createEmptyRelation(tr.getTo()));
 				}
 			}
 			tr=windower.getNextWindowScope(conn);
 		}
 		}catch(RepositoryException e){logger.error("Error while retrieving the connection to the RDF store", e);}
-		return ret;
+		return ret.getOutputStreamResult();
 	}
 	
 	private TimestampedRelation executeStreamQueryOverABlock(String query, List<URI> graphsList, long computationTimestamp){
@@ -165,7 +168,8 @@ public class Oracle {
 			long lastT0 = query.getFirstT0()+query.getWindowDefinition().getSize();
 			long lastTimestamp = Config.getInstance().getInputStreamMaxTime()*Config.getInstance().getInputStreamInterval()+query.getWindowDefinition().getSize();
 			logger.info("t0 will vary between {} and {}; the last timestamp will be: {}", new Object[]{actualT0, lastT0, lastTimestamp});
-			for(int i=1; actualT0<=lastT0;actualT0+=Config.getInstance().getTimeUnit()){
+			boolean match = false;
+			for(int i=1; !match && actualT0<=lastT0;actualT0+=Config.getInstance().getTimeUnit()){
 				logger.info("Execution {}: Window with t0={}", i, actualT0);
 				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, lastTimestamp);
 				logger.info("Returned result: {}\n", sr);
@@ -173,7 +177,7 @@ public class Oracle {
 						actualT0+"</td>" +
 						(detailedResults?"<td>"+sr.toString().replaceAll("<", "&lt;").replaceAll("]", "]<br/>")+"</td>":""));
 				if(query.getAnswer()!=null){
-					boolean match = sr.contains(query.getAnswer());
+					match = sr.contains(query.getAnswer());
 					logger.info("The system answer matches: {}", match);
 					out.write("<td>"+match+"</td></tr>");
 				} else
