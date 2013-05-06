@@ -87,7 +87,7 @@ public class JsonConverter {
 								tre.add(var, uri);
 							} else if(value.get("type").asText().equals("literal")){
 								Literal literal;
-								if(value.get("datatype").asText()!=null)
+								if(value.get("datatype")!=null)
 									literal = vf.createLiteral(value.get("value").asText(), vf.createURI(value.get("datatype").asText()));
 								else if(value.get("xml:lang")!=null)
 									literal = vf.createLiteral(value.get("value").asText(), value.get("xml:lang").asText());
