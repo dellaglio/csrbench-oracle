@@ -8,16 +8,16 @@ import org.codehaus.jackson.JsonProcessingException;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.ser.std.SerializerBase;
 
-import eu.planetdata.srbench.oracle.result.OutputStreamResult;
+import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
 
-public class OutputStreamResultSerializer extends SerializerBase<OutputStreamResult> {
+public class OutputStreamResultSerializer extends SerializerBase<StreamProcessorOutput> {
 
 	public OutputStreamResultSerializer() {
-		super(OutputStreamResult.class, true);
+		super(StreamProcessorOutput.class, true);
 	}
 
 	@Override
-	public void serialize(OutputStreamResult ors, JsonGenerator jGen, SerializerProvider sPro)
+	public void serialize(StreamProcessorOutput ors, JsonGenerator jGen, SerializerProvider sPro)
 			throws IOException, JsonProcessingException {
 		jGen.writeStartObject();
 		jGen.writeObjectField("relations", ors.getResultRelations());

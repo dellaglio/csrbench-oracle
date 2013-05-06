@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
 import eu.planetdata.srbench.oracle.io.JsonConverter;
 import eu.planetdata.srbench.oracle.query.StreamQuery;
 import eu.planetdata.srbench.oracle.query.WindowDefinition;
-import eu.planetdata.srbench.oracle.result.OutputStreamResult;
+import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
 import eu.planetdata.srbench.oracle.s2r.ReportPolicy;
 
 public class Config {
@@ -51,7 +51,7 @@ public class Config {
 		String answer = config.getString(key+".answer");
 		if(answer!=null){
 			InputStream is = getClass().getClassLoader().getResourceAsStream(answer);
-			OutputStreamResult result = converter.decodeJson(is);
+			StreamProcessorOutput result = converter.decodeJson(is);
 			ret.setAnswer(result);
 		}
 

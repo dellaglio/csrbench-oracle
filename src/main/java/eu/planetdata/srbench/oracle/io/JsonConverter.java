@@ -26,7 +26,7 @@ import eu.planetdata.srbench.oracle.io.serializer.OutputStreamResultSerializer;
 import eu.planetdata.srbench.oracle.io.serializer.TimestampedRelationElementSerializer;
 import eu.planetdata.srbench.oracle.io.serializer.TimestampedRelationSerializer;
 import eu.planetdata.srbench.oracle.io.serializer.URISerializer;
-import eu.planetdata.srbench.oracle.result.OutputStreamResult;
+import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
 import eu.planetdata.srbench.oracle.result.TimestampedRelation;
 import eu.planetdata.srbench.oracle.result.TimestampedRelationElement;
 
@@ -44,12 +44,12 @@ public class JsonConverter {
 		oracleModule.addSerializer(new TimestampedRelationSerializer());
 		oracleModule.addSerializer(new OutputStreamResultSerializer());
 
-		oracleModule.addDeserializer(OutputStreamResult.class, new JsonDeserializer<OutputStreamResult>(){
+		oracleModule.addDeserializer(StreamProcessorOutput.class, new JsonDeserializer<StreamProcessorOutput>(){
 			@Override
-			public OutputStreamResult deserialize(JsonParser jp, DeserializationContext ctxt)
+			public StreamProcessorOutput deserialize(JsonParser jp, DeserializationContext ctxt)
 					throws IOException, JsonProcessingException {
 
-				OutputStreamResult ret = new OutputStreamResult();
+				StreamProcessorOutput ret = new StreamProcessorOutput();
 				
 				jp.nextValue();
 
@@ -107,10 +107,10 @@ public class JsonConverter {
 		mapper.registerModule(oracleModule);
 	}
 	
-	public OutputStreamResult decodeJson(InputStream is){
+	public StreamProcessorOutput decodeJson(InputStream is){
 		try {
-			OutputStreamResult osr;
-			osr = mapper.readValue(is, OutputStreamResult.class);
+			StreamProcessorOutput osr;
+			osr = mapper.readValue(is, StreamProcessorOutput.class);
 			logger.debug("Parsed stream: {}", osr);
 			return osr;
 		} catch (IOException e) {
@@ -119,7 +119,7 @@ public class JsonConverter {
 		return null;
 	}
 	
-	public void encodeJson(OutputStream os, OutputStreamResult res){
+	public void encodeJson(OutputStream os, StreamProcessorOutput res){
 		try {
 			mapper.writeValue(os, res);
 		} catch (IOException e) {

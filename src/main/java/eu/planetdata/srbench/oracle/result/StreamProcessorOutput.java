@@ -6,22 +6,14 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class OutputStreamResult {
-	private static final Logger logger = LoggerFactory.getLogger(OutputStreamResult.class);
+public class StreamProcessorOutput {
+	private static final Logger logger = LoggerFactory.getLogger(StreamProcessorOutput.class);
 	
 	private List<TimestampedRelation> results;
 
-	public OutputStreamResult() {
+	public StreamProcessorOutput() {
 		results = new ArrayList<TimestampedRelation>();
 	}
-
-//	public List<TimestampedRelationElement> getResultBindingLists() {
-//		List<TimestampedRelationElement> ret = new ArrayList<TimestampedRelationElement>();
-//		for(TimestampedRelation rel : results){
-//			ret.addAll(rel.getBindings());
-//		}
-//		return ret;
-//	}
 
 	public List<TimestampedRelation> getResultRelations() {
 		return results;
@@ -40,7 +32,7 @@ public class OutputStreamResult {
 		return ret.toString();
 	}
 
-	public boolean contains(OutputStreamResult outputStream){
+	public boolean contains(StreamProcessorOutput outputStream){
 		List<TimestampedRelation> subSeq = outputStream.getResultRelations();
 		if(results.size()<subSeq.size()){
 			logger.debug("the subset size is greater than the set size!");
@@ -82,7 +74,7 @@ public class OutputStreamResult {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		OutputStreamResult other = (OutputStreamResult) obj;
+		StreamProcessorOutput other = (StreamProcessorOutput) obj;
 		if (results == null) {
 			if (other.results != null)
 				return false;

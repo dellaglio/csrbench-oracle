@@ -1,12 +1,12 @@
 package eu.planetdata.srbench.oracle.query;
 
-import eu.planetdata.srbench.oracle.result.OutputStreamResult;
+import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
 
 public class StreamQuery {
 	private String booleanQuery;
 	private WindowDefinition windowDefinition;
 	private long firstT0;
-	private OutputStreamResult answer;
+	private StreamProcessorOutput answer;
 
 	public StreamQuery() {
 		super();
@@ -36,11 +36,11 @@ public class StreamQuery {
 		this.firstT0 = firstT0;
 	}
 
-	public OutputStreamResult getAnswer() {
+	public StreamProcessorOutput getAnswer() {
 		return answer;
 	}
 
-	public void setAnswer(OutputStreamResult systemAnswer) {
+	public void setAnswer(StreamProcessorOutput systemAnswer) {
 		this.answer = systemAnswer;
 	}
 	

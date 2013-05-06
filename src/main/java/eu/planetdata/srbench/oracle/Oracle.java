@@ -26,11 +26,11 @@ import org.slf4j.LoggerFactory;
 
 import eu.planetdata.srbench.oracle.query.StreamQuery;
 import eu.planetdata.srbench.oracle.repository.BenchmarkVocab;
-import eu.planetdata.srbench.oracle.result.OutputStreamResult;
-import eu.planetdata.srbench.oracle.result.OutputStreamResultBuilder;
+import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
+import eu.planetdata.srbench.oracle.result.StreamProcessorOutputBuilder;
 import eu.planetdata.srbench.oracle.result.TimestampedRelation;
 import eu.planetdata.srbench.oracle.result.TimestampedRelationElement;
-import eu.planetdata.srbench.oracle.result.OutputStreamResultBuilder.S2ROperator;
+import eu.planetdata.srbench.oracle.result.StreamProcessorOutputBuilder.S2ROperator;
 import eu.planetdata.srbench.oracle.s2r.ReportPolicy;
 import eu.planetdata.srbench.oracle.s2r.WindowScope;
 import eu.planetdata.srbench.oracle.s2r.Windower;
@@ -48,8 +48,8 @@ public class Oracle {
 		}
 	}
 
-	protected OutputStreamResult executeStreamQuery(StreamQuery query, long t0, ReportPolicy policy, long lastTimestamp){
-		OutputStreamResultBuilder ret = new OutputStreamResultBuilder(S2ROperator.Rstream, Config.getInstance().getEmtpyRelationOutput());
+	protected StreamProcessorOutput executeStreamQuery(StreamQuery query, long t0, ReportPolicy policy, long lastTimestamp){
+		StreamProcessorOutputBuilder ret = new StreamProcessorOutputBuilder(S2ROperator.Rstream, Config.getInstance().getEmtpyRelationOutput());
 		Windower windower = new Windower(query.getWindowDefinition(), policy, t0);
 
 		try{
@@ -172,7 +172,7 @@ public class Oracle {
 			boolean match = false;
 			for(int i=1; !match && actualT0<=lastT0;actualT0+=Config.getInstance().getTimeUnit()){
 				logger.info("Execution {}: Window with t0={}", i, actualT0);
-				OutputStreamResult sr = oracle.executeStreamQuery(query, actualT0, policy, lastTimestamp);
+				StreamProcessorOutput sr = oracle.executeStreamQuery(query, actualT0, policy, lastTimestamp);
 				logger.info("Returned result: {}\n", sr);
 				out.write("<tr><td>"+i+"</td><td>"+
 						actualT0+"</td>" +
