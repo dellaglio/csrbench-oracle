@@ -35,7 +35,10 @@ public class RepoUtility {
 		} catch(RepositoryException e){
 			logger.error("Error while reading the triples in the repository");
 		}
+	}
 
+	public static RepositoryResult<Statement> getStatementsAt(RepositoryConnection conn, int timestamp) throws RepositoryException{
+		return conn.getStatements((Resource)null, (URI)null, (Value)null, false, BenchmarkVocab.getGraphURI(timestamp));
 	}
 
 }
