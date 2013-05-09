@@ -30,7 +30,6 @@ import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
 import eu.planetdata.srbench.oracle.result.StreamProcessorOutputBuilder;
 import eu.planetdata.srbench.oracle.result.TimestampedRelation;
 import eu.planetdata.srbench.oracle.result.TimestampedRelationElement;
-import eu.planetdata.srbench.oracle.result.StreamProcessorOutputBuilder.S2ROperator;
 import eu.planetdata.srbench.oracle.s2r.ReportPolicy;
 import eu.planetdata.srbench.oracle.s2r.WindowScope;
 import eu.planetdata.srbench.oracle.s2r.Windower;
@@ -49,7 +48,7 @@ public class Oracle {
 	}
 
 	protected StreamProcessorOutput executeStreamQuery(StreamQuery query, long t0, ReportPolicy policy, long lastTimestamp){
-		StreamProcessorOutputBuilder ret = new StreamProcessorOutputBuilder(S2ROperator.Rstream, Config.getInstance().getEmtpyRelationOutput());
+		StreamProcessorOutputBuilder ret = new StreamProcessorOutputBuilder(query.getS2ROperator(), Config.getInstance().getEmtpyRelationOutput());
 		Windower windower = new Windower(query.getWindowDefinition(), policy, t0);
 
 		try{

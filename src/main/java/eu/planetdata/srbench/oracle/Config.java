@@ -17,6 +17,7 @@ import eu.planetdata.srbench.oracle.io.JsonConverter;
 import eu.planetdata.srbench.oracle.query.StreamQuery;
 import eu.planetdata.srbench.oracle.query.WindowDefinition;
 import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
+import eu.planetdata.srbench.oracle.result.StreamProcessorOutputBuilder.R2SOperator;
 import eu.planetdata.srbench.oracle.s2r.ReportPolicy;
 
 public class Config {
@@ -44,6 +45,20 @@ public class Config {
 	
 	public StreamQuery getQuery(String key){
 		StreamQuery ret = new StreamQuery();
+		String output = config.getString(key+".output");
+		switch(output){
+		case "rstream":
+			ret.setS2ROperator(R2SOperator.Rstream);
+			break;
+		case "istream":
+			ret.setS2ROperator(R2SOperator.Istream);
+			break;
+		case "dstream":
+			ret.setS2ROperator(R2SOperator.Dstream);
+			break;
+		default:
+			ret.setS2ROperator(R2SOperator.Rstream);
+		}
 		ret.setBooleanQuery(config.getString(key+".booleanquery"));
 		ret.setWindowDefinition(new WindowDefinition(config.getLong(key+".window.size"), config.getLong(key+".window.slide")));
 		ret.setFirstT0(config.getLong(key+".window.firstt0"));
