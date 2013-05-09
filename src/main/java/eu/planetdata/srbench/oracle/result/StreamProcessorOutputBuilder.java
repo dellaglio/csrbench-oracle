@@ -1,15 +1,15 @@
 package eu.planetdata.srbench.oracle.result;
 
 public class StreamProcessorOutputBuilder {
-	public enum S2ROperator {Istream, Rstream, Dstream};
+	public enum R2SOperator {Istream, Rstream, Dstream};
 
-	private S2ROperator operator;
+	private R2SOperator operator;
 	private boolean outputEmptyRelation;
 	private TimestampedRelation previousRelation;
 
 	private StreamProcessorOutput output;
 
-	public StreamProcessorOutputBuilder(S2ROperator operator, boolean outputEmptyRelation) {
+	public StreamProcessorOutputBuilder(R2SOperator operator, boolean outputEmptyRelation) {
 		super();
 		this.operator = operator;
 		this.outputEmptyRelation = outputEmptyRelation;
@@ -17,7 +17,7 @@ public class StreamProcessorOutputBuilder {
 	}
 
 	public void addRelation(TimestampedRelation relation){
-		if(operator.equals(S2ROperator.Rstream)){
+		if(operator.equals(R2SOperator.Rstream)){
 			if(relation.getBindings().size()==0){
 				if(outputEmptyRelation){
 					relation.addElement(TimestampedRelationElement.createEmptyTimestampedRelationElement(relation.getComputationTimestamp()));
@@ -25,7 +25,7 @@ public class StreamProcessorOutputBuilder {
 				}
 			} else
 				output.addRelation(relation);
-		} else if(operator.equals(S2ROperator.Istream)){
+		} else if(operator.equals(R2SOperator.Istream)){
 			if(previousRelation==null){
 				if(relation.getBindings().size()==0){
 					if(outputEmptyRelation){

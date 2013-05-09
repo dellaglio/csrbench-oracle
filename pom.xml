@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>it.polimi.deib.streams</groupId>
+	<groupId>eu.planetdata.srbench</groupId>
 	<artifactId>oracle</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.7-SNAPSHOT</version>
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -44,4 +44,31 @@
 			<version>1.9.12</version>
 		</dependency>
 	</dependencies>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>mc-release</id>
+			<name>Header adder repository</name>
+			<url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.mycila.maven-license-plugin</groupId>
+				<artifactId>maven-license-plugin</artifactId>
+				<configuration>
+					<header>header.txt</header>
+					<includes>
+						<include>src/**/java</include>
+					</includes>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
