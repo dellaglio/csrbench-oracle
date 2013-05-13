@@ -1,3 +1,20 @@
+/*******************************************************************************
+ * Copyright 2013 Politecnico di Milano, Universidad Politécnica de Madrid
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *  
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *  
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *  
+ * Authors: Daniele Dell'Aglio, Jean-Paul Calbimonte, Marco Balduini,
+ * 			Oscar Corcho, Emanuele Della Valle
+ ******************************************************************************/
 package eu.planetdata.srbench.oracle;
 
 
@@ -52,28 +69,29 @@ public class Oracle {
 		Windower windower = new Windower(query.getWindowDefinition(), policy, t0);
 
 		try{
-		RepositoryConnection conn = repo.getConnection();
-		
-		WindowScope tr = windower.getNextWindowScope(conn);
-		while(tr!=null && tr.getFrom()<=lastTimestamp){
-			logger.debug("Block: [{},{})", tr.getFrom(), tr.getTo());
-			List<URI> graphs = getGraphsContent(tr);
-			if(graphs.size()>0){
-				TimestampedRelation rel = executeStreamQueryOverABlock(query.getBooleanQuery(), graphs, tr.getTo());
-				ret.addRelation(rel);
-			} else {
-				logger.debug("The content is empty and the non-empty content report policy is {}", policy.isNonEmptyContent());
-				if(!policy.isNonEmptyContent()){
-					if(Config.getInstance().getEmtpyRelationOutput())
-						ret.addRelation(TimestampedRelation.createEmptyRelation(tr.getTo()));
+			RepositoryConnection conn = repo.getConnection();
+
+			WindowScope tr = windower.getNextWindowScope(conn);
+
+			while(tr!=null && tr.getFrom()<=lastTimestamp){
+				logger.debug("Block: [{},{})", tr.getFrom(), tr.getTo());
+				List<URI> graphs = getGraphsContent(tr);
+				if(graphs.size()>0){
+					TimestampedRelation rel = executeStreamQueryOverABlock(query.getBooleanQuery(), graphs, tr.getTo());
+					ret.addRelation(rel);
+				} else {
+					logger.debug("The content is empty and the non-empty content report policy is {}", policy.isNonEmptyContent());
+					if(!policy.isNonEmptyContent()){
+						if(Config.getInstance().getEmtpyRelationOutput())
+							ret.addRelation(TimestampedRelation.createEmptyRelation(tr.getTo()));
+					}
 				}
+				tr=windower.getNextWindowScope(conn);
 			}
-			tr=windower.getNextWindowScope(conn);
-		}
 		}catch(RepositoryException e){logger.error("Error while retrieving the connection to the RDF store", e);}
 		return ret.getOutputStreamResult();
 	}
-	
+
 	private TimestampedRelation executeStreamQueryOverABlock(String query, List<URI> graphsList, long computationTimestamp){
 		try {
 			TimestampedRelation ret = new TimestampedRelation();
@@ -85,7 +103,7 @@ public class Oracle {
 			}
 			tq.setDataset(dataset);
 			TupleQueryResult tqr = tq.evaluate();
-			
+
 			if(tqr.hasNext()){
 				while(tqr.hasNext()){
 					BindingSet bs = tqr.next();
@@ -144,13 +162,13 @@ public class Oracle {
 
 	public static void main(String[] args) throws IOException {
 		Oracle oracle = new Oracle();
-	
+
 		boolean detailedResults=false;
-		
-//		Writer out = new BufferedWriter(new FileWriter("output-"+System.currentTimeMillis()+".html"));
+
+		//		Writer out = new BufferedWriter(new FileWriter("output-"+System.currentTimeMillis()+".html"));
 		Writer out = new BufferedWriter(new FileWriter("output.html"));
 		out.write("<html><head><title>Oracle Results</title><style type=\"text/css\"> table { border-collapse:collapse; } table,th, td { border: 1px solid black; } </style></head><body>");
-		
+
 		ReportPolicy policy = Config.getInstance().getPolicy();
 		for(String queryKey : Config.getInstance().getQuerySet()){
 			logger.info("Testing query {}", queryKey);
@@ -188,9 +206,9 @@ public class Oracle {
 		}
 		out.write("</body></html>");
 		out.close();
-		
+
 	}
-	
-	
-	
+
+
+
 }

@@ -1,4 +1,4 @@
-rdfstream-validator
+CSRBench-oracle
 ===================
 Requirements:
  * Java 7+
