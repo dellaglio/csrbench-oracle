@@ -16,6 +16,6 @@ Import the data stream into the oracle:
  * Data should be described in Turtle and it should be stored in the folder data. Filenames should follow the pattern data_xx.ttl, where xx is the application timestamp associated to the triples in the file.
 
 Execute the Oracle:
- * It runs the Oracle. Depending on the setup configuration, for each query to be executed, two possible behaviours are possible:
+ * Run the Oracle. Depending on the setup configuration, for each query to be executed, two possible behaviours are possible:
   * If there is no answer associated to the query, the oracle produces all the possible answers according to the input configuration;
   * If there is an answer associated to the query, the oracle starts to produce an answer and comparing it with the input one. If it finds a match, it stops, otherwise it repeats.
