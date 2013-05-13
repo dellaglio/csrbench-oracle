@@ -5,8 +5,15 @@ Requirements:
  * Maven
 
 The project has two main files:
- * SRBenchImporter: imports the RDF input stream in the oracle
- * Oracle: executes the test queries over the RDF stream, produces the results. If a results to be compared is provided, the Oracle verifies that it is correct.
+ * (eu.planetdata.srbench.oracle.repository.)SRBenchImporter : imports the RDF input stream in the oracle
+ * (eu.planetdata.srbench.oracle.)Oracle: executes the test queries over the RDF stream, produces the results. If a results to be compared is provided, the Oracle verifies that it is correct.
 
 Configuration:
- * The project can be configured editing the setup.properties file
+ * The project can be configured editing the setup.properties file. See https://github.com/dellaglio/csrbench-oracle/wiki/Configuration for a description of the properties.
+
+Import the data stream into the oracle:
+ * It is done through the SRBenchImporter
+ * Data should be described in Turtle and it should be stored in the folder data. Filenames should follow the pattern data_xx.ttl, where xx is the application timestamp associated to the triples in the file.
+
+Execute the Oracle:
+ * 
