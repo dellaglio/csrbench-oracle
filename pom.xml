@@ -44,31 +44,4 @@
 			<version>1.9.12</version>
 		</dependency>
 	</dependencies>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>mc-release</id>
-			<name>Header adder repository</name>
-			<url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-		</pluginRepository>
-	</pluginRepositories>
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>com.mycila.maven-license-plugin</groupId>
-				<artifactId>maven-license-plugin</artifactId>
-				<configuration>
-					<header>header.txt</header>
-					<includes>
-						<include>src/**/java</include>
-					</includes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
