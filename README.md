@@ -4,6 +4,9 @@ Requirements:
  * Java 7+
  * Maven
 
+License:
+ * The code is released under the Apache 2.0 license
+
 The project has two main files:
  * (eu.planetdata.srbench.oracle.repository.)SRBenchImporter : imports the RDF input stream in the oracle
  * (eu.planetdata.srbench.oracle.)Oracle: executes the test queries over the RDF stream, produces the results. If a results to be compared is provided, the Oracle verifies that it is correct.
