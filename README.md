@@ -23,3 +23,6 @@ Execute the Oracle:
   * If there is no answer associated to the query, the oracle produces all the possible answers according to the input configuration;
   * If there is an answer associated to the query, the oracle starts to produce an answer and comparing it with the input one. If it finds a match, it stops, otherwise it repeats.
  * When the Oracle runs, it creates an html file with a summary of the tests and the results.
+
+Publications:
+ * Daniele Dell'Aglio, Jean-Paul Calbimonte, Marco Balduini, Óscar Corcho, Emanuele Della Valle: On Correctness in RDF Stream Processor Benchmarking. International Semantic Web Conference (2) 2013: 326-342
