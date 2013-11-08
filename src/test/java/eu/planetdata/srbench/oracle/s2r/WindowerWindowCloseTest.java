@@ -24,7 +24,7 @@ import org.junit.Test;
 import eu.planetdata.srbench.oracle.query.WindowDefinition;
 import eu.planetdata.srbench.oracle.s2r.ReportPolicy;
 import eu.planetdata.srbench.oracle.s2r.WindowScope;
-import eu.planetdata.srbench.oracle.s2r.Windower;
+import eu.planetdata.srbench.oracle.s2r.WindowOperator;
 
 import static org.junit.Assert.*;
 
@@ -36,7 +36,7 @@ public class WindowerWindowCloseTest {
 		policy.setWindowClose(true);
 		policy.setContentChange(false);
 
-		Windower windower = new Windower(new WindowDefinition(10000,3000), policy, 0);
+		WindowOperator windower = new WindowOperator(new WindowDefinition(10000,3000), policy, 0);
 		WindowScope range = windower.getNextWindowScope(null);
 		assertEquals(0, range.getFrom());
 		assertEquals(10000, range.getTo());
@@ -64,7 +64,7 @@ public class WindowerWindowCloseTest {
 		policy.setWindowClose(true);
 		policy.setContentChange(false);
 
-		Windower windower = new Windower(new WindowDefinition(10000,3000), policy, 2000);
+		WindowOperator windower = new WindowOperator(new WindowDefinition(10000,3000), policy, 2000);
 		WindowScope range = windower.getNextWindowScope(null); 
 		assertEquals(2000, range.getFrom());
 		assertEquals(12000, range.getTo());
@@ -92,7 +92,7 @@ public class WindowerWindowCloseTest {
 		policy.setWindowClose(true);
 		policy.setContentChange(false);
 
-		Windower windower = new Windower(new WindowDefinition(10000,1000), policy, 0);
+		WindowOperator windower = new WindowOperator(new WindowDefinition(10000,1000), policy, 0);
 		WindowScope range = windower.getNextWindowScope(null);
 		assertEquals(0, range.getFrom());
 		assertEquals(10000, range.getTo());
@@ -124,7 +124,7 @@ public class WindowerWindowCloseTest {
 		policy.setWindowClose(true);
 		policy.setContentChange(false);
 
-		Windower windower = new Windower(new WindowDefinition(10000,1000), policy, 3000);
+		WindowOperator windower = new WindowOperator(new WindowDefinition(10000,1000), policy, 3000);
 		WindowScope range = windower.getNextWindowScope(null);
 		assertEquals(3000, range.getFrom());
 		assertEquals(13000, range.getTo());
@@ -156,7 +156,7 @@ public class WindowerWindowCloseTest {
 		policy.setWindowClose(true);
 		policy.setContentChange(false);
 
-		Windower windower = new Windower(new WindowDefinition(1000,1000), policy, 0);
+		WindowOperator windower = new WindowOperator(new WindowDefinition(1000,1000), policy, 0);
 		WindowScope range = windower.getNextWindowScope(null);
 		assertEquals(0, range.getFrom());
 		assertEquals(1000, range.getTo());
@@ -192,7 +192,7 @@ public class WindowerWindowCloseTest {
 		policy.setWindowClose(true);
 		policy.setContentChange(false);
 
-		Windower windower = new Windower(new WindowDefinition(1000,1000), policy, 2000);
+		WindowOperator windower = new WindowOperator(new WindowDefinition(1000,1000), policy, 2000);
 		WindowScope range = windower.getNextWindowScope(null);
 		assertEquals(2000, range.getFrom());
 		assertEquals(3000, range.getTo());

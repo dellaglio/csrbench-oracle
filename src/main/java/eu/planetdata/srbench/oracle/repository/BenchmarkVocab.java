@@ -24,9 +24,11 @@ public class BenchmarkVocab  {
 	private static final String baseURI = "http://www.streamreasoning.org/schema/benchmark#";
 	private static final String baseGraphURI = baseURI + "timestampedGraph";
 	public static final URI graphList = new URIImpl(baseURI+"graphsList");
+	public static final URI graphStaticData = new URIImpl(baseURI+"staticDataGraph");
 	public static final URI hasTimestamp = new URIImpl(baseURI+"hasTimestamp");
 	
 	public static URI getGraphURI(long timestamp){
 		return new URIImpl(baseGraphURI+timestamp);
 	}
+
 }

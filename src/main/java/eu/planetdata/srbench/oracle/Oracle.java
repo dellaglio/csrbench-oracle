@@ -41,7 +41,8 @@ import org.openrdf.sail.nativerdf.NativeStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.planetdata.srbench.oracle.query.StreamQuery;
+import eu.planetdata.srbench.oracle.configuration.Config;
+import eu.planetdata.srbench.oracle.query.ContinuousQuery;
 import eu.planetdata.srbench.oracle.repository.BenchmarkVocab;
 import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
 import eu.planetdata.srbench.oracle.result.StreamProcessorOutputBuilder;
@@ -49,7 +50,7 @@ import eu.planetdata.srbench.oracle.result.TimestampedRelation;
 import eu.planetdata.srbench.oracle.result.TimestampedRelationElement;
 import eu.planetdata.srbench.oracle.s2r.ReportPolicy;
 import eu.planetdata.srbench.oracle.s2r.WindowScope;
-import eu.planetdata.srbench.oracle.s2r.Windower;
+import eu.planetdata.srbench.oracle.s2r.WindowOperator;
 
 public class Oracle {
 	private final static Logger logger = LoggerFactory.getLogger(Oracle.class);
@@ -64,9 +65,9 @@ public class Oracle {
 		}
 	}
 
-	protected StreamProcessorOutput executeStreamQuery(StreamQuery query, long t0, ReportPolicy policy, long lastTimestamp){
+	protected StreamProcessorOutput executeStreamQuery(ContinuousQuery query, long t0, ReportPolicy policy, long lastTimestamp){
 		StreamProcessorOutputBuilder ret = new StreamProcessorOutputBuilder(query.getS2ROperator(), Config.getInstance().getEmtpyRelationOutput());
-		Windower windower = new Windower(query.getWindowDefinition(), policy, t0);
+		WindowOperator windower = new WindowOperator(query.getWindowDefinition(), policy, t0);
 
 		try{
 			RepositoryConnection conn = repo.getConnection();
@@ -76,6 +77,8 @@ public class Oracle {
 			while(tr!=null && tr.getFrom()<=lastTimestamp){
 				logger.debug("Block: [{},{})", tr.getFrom(), tr.getTo());
 				List<URI> graphs = getGraphsContent(tr);
+				if(query.usesStaticData())
+					graphs.add(BenchmarkVocab.graphStaticData);
 				if(graphs.size()>0){
 					TimestampedRelation rel = executeStreamQueryOverABlock(query.getBooleanQuery(), graphs, tr.getTo());
 					ret.addRelation(rel);
@@ -173,7 +176,7 @@ public class Oracle {
 		for(String queryKey : Config.getInstance().getQuerySet()){
 			logger.info("Testing query {}", queryKey);
 			out.write("<h2>Query "+queryKey+"</h2>");
-			StreamQuery query = Config.getInstance().getQuery(queryKey);
+			ContinuousQuery query = Config.getInstance().getQuery(queryKey);
 
 			if(detailedResults && query.getAnswer()!=null){
 				out.write("<h3>Result of the system</h3>");

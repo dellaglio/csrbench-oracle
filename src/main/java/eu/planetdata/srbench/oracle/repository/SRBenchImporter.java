@@ -37,7 +37,7 @@ import org.openrdf.rio.RDFParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.planetdata.srbench.oracle.Config;
+import eu.planetdata.srbench.oracle.configuration.Config;
 
 public class SRBenchImporter extends StreamImporter{
 	private final static Logger logger = LoggerFactory.getLogger(SRBenchImporter.class);
@@ -57,6 +57,13 @@ public class SRBenchImporter extends StreamImporter{
 		if(!existsGraph(graph)){
 			repo.getConnection().add(graph, BenchmarkVocab.hasTimestamp, new NumericLiteralImpl(timestamp), BenchmarkVocab.graphList);
 		}
+		repo.getConnection().add(f,"",RDFFormat.TURTLE, graph);
+		repo.getConnection().commit();
+	}
+	
+	public void addStaticData(File f) throws RDFParseException, IOException, RepositoryException{
+		URI graph = BenchmarkVocab.graphStaticData;
+		repo.getConnection().begin();
 		repo.getConnection().add(f,"",RDFFormat.TURTLE, graph);
 		repo.getConnection().commit();
 	}

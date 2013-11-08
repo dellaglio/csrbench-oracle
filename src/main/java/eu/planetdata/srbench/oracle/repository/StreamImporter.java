@@ -33,7 +33,7 @@ import org.openrdf.sail.nativerdf.NativeStore;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.planetdata.srbench.oracle.Config;
+import eu.planetdata.srbench.oracle.configuration.Config;
 
 public class StreamImporter {
 	private final static Logger logger = LoggerFactory.getLogger(StreamImporter.class);

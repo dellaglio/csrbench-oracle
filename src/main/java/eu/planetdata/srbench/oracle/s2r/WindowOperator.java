@@ -28,21 +28,21 @@ import org.openrdf.repository.RepositoryException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import eu.planetdata.srbench.oracle.Config;
+import eu.planetdata.srbench.oracle.configuration.Config;
 import eu.planetdata.srbench.oracle.query.WindowDefinition;
 import eu.planetdata.srbench.oracle.repository.BenchmarkVocab;
 
 
 
-public class Windower {
+public class WindowOperator {
 	private WindowDefinition window;
 	private ReportPolicy policy;
 	private final long t0;
 	private long actualTime;
 	
-	private static final Logger logger = LoggerFactory.getLogger(Windower.class);
+	private static final Logger logger = LoggerFactory.getLogger(WindowOperator.class);
 	
-	public Windower(WindowDefinition window, ReportPolicy policy, long t0) {
+	public WindowOperator(WindowDefinition window, ReportPolicy policy, long t0) {
 		super();
 		this.window = window;
 		this.policy = policy;

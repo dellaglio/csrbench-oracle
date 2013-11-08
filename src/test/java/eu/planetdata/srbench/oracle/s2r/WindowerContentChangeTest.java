@@ -35,7 +35,7 @@ import eu.planetdata.srbench.oracle.repository.RepoUtility;
 import eu.planetdata.srbench.oracle.repository.StreamImporter;
 import eu.planetdata.srbench.oracle.s2r.ReportPolicy;
 import eu.planetdata.srbench.oracle.s2r.WindowScope;
-import eu.planetdata.srbench.oracle.s2r.Windower;
+import eu.planetdata.srbench.oracle.s2r.WindowOperator;
 
 import static org.junit.Assert.*;
 
@@ -79,7 +79,7 @@ public class WindowerContentChangeTest {
 
 			RepositoryConnection conn = si.getRepository().getConnection();
 
-			Windower windower = new Windower(new WindowDefinition(10000,3000), policy, 0);
+			WindowOperator windower = new WindowOperator(new WindowDefinition(10000,3000), policy, 0);
 			WindowScope range = windower.getNextWindowScope(conn);
 			assertEquals(0, range.getFrom());
 			assertEquals(2000, range.getTo());
@@ -113,7 +113,7 @@ public class WindowerContentChangeTest {
 
 			RepositoryConnection conn = si.getRepository().getConnection();
 
-			Windower windower = new Windower(new WindowDefinition(10000,3000), policy, 2000);
+			WindowOperator windower = new WindowOperator(new WindowDefinition(10000,3000), policy, 2000);
 			WindowScope range = windower.getNextWindowScope(conn);
 			assertEquals(2000, range.getFrom());
 			assertEquals(4000, range.getTo());
@@ -145,7 +145,7 @@ public class WindowerContentChangeTest {
 
 			RepositoryConnection conn = si.getRepository().getConnection();
 
-			Windower windower = new Windower(new WindowDefinition(1000,1000), policy, 0000);
+			WindowOperator windower = new WindowOperator(new WindowDefinition(1000,1000), policy, 0000);
 			WindowScope range = windower.getNextWindowScope(conn);
 			assertEquals(1000, range.getFrom());
 			assertEquals(2000, range.getTo());
@@ -181,7 +181,7 @@ public class WindowerContentChangeTest {
 
 			RepositoryConnection conn = si.getRepository().getConnection();
 
-			Windower windower = new Windower(new WindowDefinition(1000,1000), policy, 5000);
+			WindowOperator windower = new WindowOperator(new WindowDefinition(1000,1000), policy, 5000);
 			WindowScope range = windower.getNextWindowScope(conn);
 			assertEquals(12000, range.getFrom());
 			assertEquals(13000, range.getTo());

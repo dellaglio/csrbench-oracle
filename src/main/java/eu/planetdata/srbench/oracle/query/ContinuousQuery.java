@@ -20,14 +20,15 @@ package eu.planetdata.srbench.oracle.query;
 import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
 import eu.planetdata.srbench.oracle.result.StreamProcessorOutputBuilder.R2SOperator;
 
-public class StreamQuery {
+public class ContinuousQuery {
 	private String booleanQuery;
 	private WindowDefinition windowDefinition;
 	private long firstT0;
 	private StreamProcessorOutput answer;
 	private R2SOperator r2SOperator;
+	private boolean staticData;
 
-	public StreamQuery() {
+	public ContinuousQuery() {
 		super();
 	}
 
@@ -69,6 +70,14 @@ public class StreamQuery {
 
 	public void setS2ROperator(R2SOperator r2sOperator) {
 		this.r2SOperator = r2sOperator;
+	}
+
+	public boolean usesStaticData() {
+		return staticData;
+	}
+
+	public void setStaticData(boolean staticData) {
+		this.staticData = staticData;
 	}
 	
 	

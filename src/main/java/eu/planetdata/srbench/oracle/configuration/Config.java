@@ -15,8 +15,7 @@
  * Authors: Daniele Dell'Aglio, Jean-Paul Calbimonte, Marco Balduini,
  * 			Oscar Corcho, Emanuele Della Valle
  ******************************************************************************/
-package eu.planetdata.srbench.oracle;
-
+package eu.planetdata.srbench.oracle.configuration;
 
 import java.io.File;
 import java.io.InputStream;
@@ -31,7 +30,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import eu.planetdata.srbench.oracle.io.JsonConverter;
-import eu.planetdata.srbench.oracle.query.StreamQuery;
+import eu.planetdata.srbench.oracle.query.ContinuousQuery;
 import eu.planetdata.srbench.oracle.query.WindowDefinition;
 import eu.planetdata.srbench.oracle.result.StreamProcessorOutput;
 import eu.planetdata.srbench.oracle.result.StreamProcessorOutputBuilder.R2SOperator;
@@ -60,8 +59,8 @@ public class Config {
 		return ret;
 	}
 	
-	public StreamQuery getQuery(String key){
-		StreamQuery ret = new StreamQuery();
+	public ContinuousQuery getQuery(String key){
+		ContinuousQuery ret = new ContinuousQuery();
 		String output = config.getString(key+".output");
 		switch(output){
 		case "rstream":
@@ -79,6 +78,7 @@ public class Config {
 		ret.setBooleanQuery(config.getString(key+".booleanquery"));
 		ret.setWindowDefinition(new WindowDefinition(config.getLong(key+".window.size"), config.getLong(key+".window.slide")));
 		ret.setFirstT0(config.getLong(key+".window.firstt0"));
+		ret.setStaticData(config.getBoolean(key+".staticdata"));
 
 		String answer = config.getString(key+".answer");
 		if(answer!=null){
