@@ -12,5 +12,5 @@ project/boot/
 test-repository/
 srbench-repository/
 .DS_Store
-/output.html
-/README.md~
+output.html
+README.md~
